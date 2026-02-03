@@ -1,0 +1,209 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.625rem;
+        
+        /* Romantic color palette - Light mode */
+        --background: 0.98 0.02 15;
+        --foreground: 0.25 0.03 15;
+        --card: 1 0 0;
+        --card-foreground: 0.25 0.03 15;
+        --popover: 1 0 0;
+        --popover-foreground: 0.25 0.03 15;
+        --primary: 0.65 0.18 350;
+        --primary-foreground: 0.98 0 0;
+        --secondary: 0.95 0.05 340;
+        --secondary-foreground: 0.25 0.03 15;
+        --muted: 0.95 0.02 340;
+        --muted-foreground: 0.55 0.02 15;
+        --accent: 0.70 0.20 345;
+        --accent-foreground: 0.98 0 0;
+        --destructive: 0.577 0.245 27.325;
+        --destructive-foreground: 0.985 0 0;
+        --border: 0.90 0.03 340;
+        --input: 0.90 0.03 340;
+        --ring: 0.70 0.15 345;
+        
+        /* Custom romantic colors */
+        --romantic-rose: 0.85 0.12 350;
+        --romantic-pink: 0.90 0.08 340;
+        --romantic-lavender: 0.88 0.10 310;
+        --romantic-deep: 0.35 0.08 350;
+        --romantic-accent: 0.65 0.22 345;
+        --romantic-gold: 0.75 0.15 60;
+        --romantic-text: 0.40 0.05 350;
+        
+        --chart-1: 0.646 0.222 41.116;
+        --chart-2: 0.6 0.118 184.704;
+        --chart-3: 0.398 0.07 227.392;
+        --chart-4: 0.828 0.189 84.429;
+        --chart-5: 0.769 0.188 70.08;
+        --sidebar: 0.985 0 0;
+        --sidebar-foreground: 0.145 0 0;
+        --sidebar-primary: 0.205 0 0;
+        --sidebar-primary-foreground: 0.985 0 0;
+        --sidebar-accent: 0.97 0 0;
+        --sidebar-accent-foreground: 0.205 0 0;
+        --sidebar-border: 0.922 0 0;
+        --sidebar-ring: 0.708 0 0;
+    }
+
+    .dark {
+        --background: 0.20 0.05 350;
+        --foreground: 0.95 0.02 340;
+        --card: 0.25 0.06 350;
+        --card-foreground: 0.95 0.02 340;
+        --popover: 0.25 0.06 350;
+        --popover-foreground: 0.95 0.02 340;
+        --primary: 0.75 0.20 345;
+        --primary-foreground: 0.20 0.05 350;
+        --secondary: 0.30 0.08 345;
+        --secondary-foreground: 0.95 0.02 340;
+        --muted: 0.30 0.06 345;
+        --muted-foreground: 0.70 0.05 340;
+        --accent: 0.40 0.12 345;
+        --accent-foreground: 0.95 0.02 340;
+        --destructive: 0.704 0.191 22.216;
+        --destructive-foreground: 0.95 0 0;
+        --border: 0.35 0.08 345;
+        --input: 0.35 0.08 345;
+        --ring: 0.60 0.15 345;
+        
+        /* Custom romantic colors - Dark mode */
+        --romantic-rose: 0.40 0.15 350;
+        --romantic-pink: 0.45 0.12 340;
+        --romantic-lavender: 0.50 0.12 310;
+        --romantic-deep: 0.85 0.08 340;
+        --romantic-accent: 0.70 0.22 345;
+        --romantic-gold: 0.70 0.18 60;
+        --romantic-text: 0.80 0.05 340;
+        
+        --chart-1: 0.488 0.243 264.376;
+        --chart-2: 0.696 0.17 162.48;
+        --chart-3: 0.769 0.188 70.08;
+        --chart-4: 0.627 0.265 303.9;
+        --chart-5: 0.645 0.246 16.439;
+        --sidebar: 0.205 0 0;
+        --sidebar-foreground: 0.985 0 0;
+        --sidebar-primary: 0.488 0.243 264.376;
+        --sidebar-primary-foreground: 0.985 0 0;
+        --sidebar-accent: 0.269 0 0;
+        --sidebar-accent-foreground: 0.985 0 0;
+        --sidebar-border: 1 0 0 / 10%;
+        --sidebar-ring: 0.439 0 0;
+    }
+
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+@layer utilities {
+    /* Custom animations */
+    @keyframes float-heart {
+        0% {
+            transform: translateY(100vh) rotate(0deg);
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.3;
+        }
+        90% {
+            opacity: 0.3;
+        }
+        100% {
+            transform: translateY(-100px) rotate(360deg);
+            opacity: 0;
+        }
+    }
+
+    @keyframes heartbeat {
+        0%, 100% {
+            transform: scale(1);
+        }
+        25% {
+            transform: scale(1.1);
+        }
+        50% {
+            transform: scale(1);
+        }
+        75% {
+            transform: scale(1.15);
+        }
+    }
+
+    @keyframes shimmer {
+        0%, 100% {
+            text-shadow: 0 0 20px oklch(var(--romantic-gold) / 0.5),
+                         0 0 40px oklch(var(--romantic-accent) / 0.3);
+        }
+        50% {
+            text-shadow: 0 0 30px oklch(var(--romantic-gold) / 0.8),
+                         0 0 60px oklch(var(--romantic-accent) / 0.5);
+        }
+    }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slide-up {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes bounce-slow {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+
+    .animate-float-heart {
+        animation: float-heart linear infinite;
+    }
+
+    .animate-heartbeat {
+        animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    .animate-shimmer {
+        animation: shimmer 3s ease-in-out infinite;
+    }
+
+    .animate-fade-in {
+        animation: fade-in 1s ease-out;
+    }
+
+    .animate-slide-up {
+        animation: slide-up 0.8s ease-out 0.3s both;
+    }
+
+    .animate-bounce-slow {
+        animation: bounce-slow 3s ease-in-out infinite;
+    }
+}
+
+/* Custom font imports */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400&display=swap');
