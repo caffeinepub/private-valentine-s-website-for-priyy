@@ -1,0 +1,71 @@
+{
+  "kind": "build_request",
+  "title": "Add Yes/No interaction on final 'Will You Be My Valentine?' slide",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Update the final carousel slide in `frontend/src/App.tsx` (the message with title \"Will You Be My Valentine?\") to render two CTA buttons: \"Yes\" and \"No\".",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "On the final slide of asking will you be my valentine? Add option yes or no."
+        ]
+      },
+      "acceptanceCriteria": [
+        "When `currentMessageIndex` is on the last message (currently index 3), the UI shows both \"Yes\" and \"No\" buttons within the message card area."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement the \"Yes\" button behavior: when clicked, replace the question content on the final slide with a thank-you, loving message that includes the exact phrase \"you are forever mine\".",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "When yes is pressed display a thank you loving message, highlighting you are forever mine."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Clicking \"Yes\" displays a thank-you loving message on the final slide.",
+        "The displayed message includes the exact text: \"you are forever mine\"."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement the \"No\" button behavior: when clicked, display a message stating there is no choice to select no, and then re-display only the \"Yes\" option (do not continue to show the \"No\" button after it is clicked).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "When no is clicked display there is no choice to select no and display yes again"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Clicking \"No\" displays an English message communicating that selecting \"No\" is not a real choice.",
+        "After clicking \"No\", the UI shows the \"Yes\" button again and does not show the \"No\" button."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not add new backend canister methods; `backend/main.mo` must remain unchanged unless strictly required for this UI-only interaction.",
+    "Do not edit files under `frontend/src/components/ui` (compose existing UI components like `Button` instead).",
+    "Use English for any user-facing text."
+  ],
+  "nonGoals": [
+    "Persisting the Yes/No choice to the backend.",
+    "Adding new authentication flows or requiring Internet Identity login.",
+    "Adding new slides to the carousel or changing existing slide text outside the final-slide interaction."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

@@ -1,2 +1,3 @@
-# private-valentine-s-website-for-priyy
-Exported from Caffeine project: Private Valentine's Website for Priyy🦋
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

@@ -1,0 +1,51 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Yes/No interaction on final Valentine carousel slide",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Render \"Yes\" and \"No\" CTA buttons within the final carousel slide message card area.",
+      "acceptanceCriteria": [
+        "When `currentMessageIndex` is on the last message (currently index 3), the UI shows both \"Yes\" and \"No\" buttons within the message card area."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Update the final slide rendering to include a CTA area inside the message card that conditionally shows two buttons, \"Yes\" and \"No\", when the user is on the last slide. Use the shadcn-ui `Button` component for the CTAs (Verify the component's usage instructions before implementing)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Implement the \"Yes\" click behavior to replace the final-slide question with a thank-you loving message containing the phrase \"you are forever mine\".",
+      "acceptanceCriteria": [
+        "Clicking \"Yes\" displays a thank-you loving message on the final slide.",
+        "The displayed message includes the exact text: \"you are forever mine\"."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add local UI state for the final slide interaction and wire the \"Yes\" button onClick to switch the final slide content from the original question to a thank-you loving message that includes the exact phrase \"you are forever mine\". Use English for the user-facing text and keep changes limited to the final-slide interaction. Use the shadcn-ui `Button` component for the CTA (Verify the component's usage instructions before implementing)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Implement the \"No\" click behavior to show a message that \"No\" is not a real choice and then re-display only the \"Yes\" option.",
+      "acceptanceCriteria": [
+        "Clicking \"No\" displays an English message communicating that selecting \"No\" is not a real choice.",
+        "After clicking \"No\", the UI shows the \"Yes\" button again and does not show the \"No\" button."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Extend the final-slide interaction state to support a \"No\" selection: on \"No\" click, replace the final slide content with an English message indicating there is no real choice to select \"No\", and update the CTA area to render only the \"Yes\" button (hide the \"No\" button) after \"No\" has been clicked. Use the shadcn-ui `Button` component for the remaining CTA (Verify the component's usage instructions before implementing)."
+        }
+      ]
+    }
+  ]
+}
