@@ -1,5 +1,6 @@
 {
-  "frontend/src/App.tsx": "Main Valentine's application featuring an animated romantic message carousel with heartfelt content for Priyy🦋, including floating hearts, elegant typography, navigation between four love messages, and an interactive Yes/No choice on the final slide that displays a loving acceptance message with \"you are forever mine\" when Yes is clicked, or rejects No and shows only Yes again.",
+  "frontend/src/App.tsx": "Main Valentine's application with carousel of romantic messages for Priyy🦋, featuring Yes/No interaction on final slide, and after \"Yes\" acceptance displays a \"Moments💞\" button that navigates to a separate Moments page showing uploaded photos.",
   "frontend/src/index.css": "Complete stylesheet with romantic OKLCH color palette (pinks, roses, lavenders, gold), custom animations (floating hearts, heartbeat, shimmer), and Google Fonts imports for elegant typography.",
-  "frontend/tailwind.config.js": "Tailwind configuration extended with romantic color tokens, custom font families (Great Vibes script, Playfair Display serif, Lato sans), and design system tokens for the Valentine's theme."
+  "frontend/tailwind.config.js": "Tailwind configuration extended with romantic color tokens, custom font families (Great Vibes script, Playfair Display serif, Lato sans), and design system tokens for the Valentine's theme.",
+  "frontend/src/pages/Moments.tsx": "Dedicated Moments page displaying two uploaded photos (IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg) in a romantic gallery layout with lovely message, decorative hearts, gradient borders, hover effects, and a Back button to return to the main carousel."
 }

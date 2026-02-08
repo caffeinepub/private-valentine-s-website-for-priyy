@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Heart, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Moments from '@/pages/Moments';
 
 function App() {
   const [showContent, setShowContent] = useState(false);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [finalSlideState, setFinalSlideState] = useState<'question' | 'no-rejected' | 'yes-accepted'>('question');
+  const [currentView, setCurrentView] = useState<'carousel' | 'moments'>('carousel');
 
   useEffect(() => {
     const timer = setTimeout(() => setShowContent(true), 500);
@@ -55,6 +57,14 @@ function App() {
     setFinalSlideState('no-rejected');
   };
 
+  const handleMomentsClick = () => {
+    setCurrentView('moments');
+  };
+
+  const handleBackToCarousel = () => {
+    setCurrentView('carousel');
+  };
+
   const isLastSlide = currentMessageIndex === messages.length - 1;
 
   // Determine content for the final slide based on state
@@ -75,6 +85,11 @@ function App() {
   };
 
   const currentContent = isLastSlide ? getFinalSlideContent() : messages[currentMessageIndex];
+
+  // Show Moments page if that view is active
+  if (currentView === 'moments') {
+    return <Moments onBack={handleBackToCarousel} />;
+  }
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -164,6 +179,19 @@ function App() {
                         No
                       </Button>
                     )}
+                  </div>
+                )}
+
+                {/* Moments button - shown after Yes acceptance */}
+                {isLastSlide && finalSlideState === 'yes-accepted' && (
+                  <div className="flex items-center justify-center mt-8">
+                    <Button
+                      onClick={handleMomentsClick}
+                      size="lg"
+                      className="bg-romantic-accent hover:bg-romantic-accent/90 text-white px-12 py-6 text-xl font-semibold shadow-lg hover:shadow-xl transition-all animate-pulse"
+                    >
+                      Moments💞
+                    </Button>
                   </div>
                 )}
               </div>

@@ -1,105 +1,32 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "A React + Tailwind single-page \"Private Valentine's Website for Priyy🦋\" featuring an animated love-letter message carousel with romantic styling (floating hearts, shimmer/heartbeat animations, themed typography), plus scaffolding for Internet Identity authentication and ICP canister actor creation via React Query. Add an interactive final-slide \"Will you be my valentine?\" prompt with Yes/No behavior and follow-up messages. The backend canister currently contains no methods (empty actor).",
+  "summary": "Valentine prompt app: after selecting “Yes” on the “Will you be my valentine” page, show a “Moments💞” option that opens a new page displaying uploaded photos with a lovely decorated message.",
+  "architectural_notes": [],
+  "known_issues": [
+    "Uploaded photos are not visible/not showing in the app (needs investigation/fix)."
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
-      "id": "IF-1",
-      "title": "Valentine's message carousel UI",
-      "synonyms": [
-        "love letter carousel",
-        "romantic message slides"
-      ],
-      "description": "Renders a four-part romantic message experience with titles/text, 'Previous'/'Next' navigation, and clickable pagination dots, including an initial fade/slide-in entrance transition.",
-      "reqIds": [],
-      "version": 1
-    },
-    {
-      "id": "IF-2",
-      "title": "Layered romantic background visuals",
-      "synonyms": [
-        "background layers",
-        "romantic background images"
-      ],
-      "description": "Applies multiple full-screen background layers: two generated image overlays (bokeh + hearts) with opacity and a gradient wash using romantic Tailwind color tokens.",
-      "reqIds": [],
-      "version": 1
-    },
-    {
-      "id": "IF-3",
-      "title": "Floating hearts and accent animations",
-      "synonyms": [
-        "heart particles",
-        "ambient animations"
-      ],
-      "description": "Creates an ambient floating hearts effect (15 heart icons with randomized positions/durations) and uses custom animations (heartbeat, shimmer, bounce) plus a butterfly accent image at the bottom.",
-      "reqIds": [],
-      "version": 1
-    },
-    {
-      "id": "IF-4",
-      "title": "Romantic Tailwind theme and custom CSS animations",
-      "synonyms": [
-        "design tokens",
-        "OKLCH palette",
-        "custom Tailwind utilities"
-      ],
-      "description": "Defines a romantic OKLCH-based color palette and typography tokens via CSS variables, extends Tailwind colors/fonts/radii, and provides custom keyframe animations (float-heart, heartbeat, shimmer, fade-in, slide-up, bounce-slow). Imports Google Fonts (Great Vibes, Playfair Display, Lato).",
-      "reqIds": [],
-      "version": 1
-    },
-    {
-      "id": "IF-5",
-      "title": "React Query client setup",
-      "synonyms": [
-        "TanStack Query provider",
-        "query caching layer"
-      ],
-      "description": "Initializes and mounts a QueryClientProvider at the app root to support query caching and async resource management across the application.",
-      "reqIds": [],
-      "version": 1
-    },
-    {
-      "id": "IF-6",
-      "title": "Internet Identity authentication provider",
-      "synonyms": [
-        "II auth context",
-        "login/logout flow"
-      ],
-      "description": "Implements an InternetIdentityProvider using @dfinity/auth-client that initializes an AuthClient, loads any stored session, supports login with configurable derivation origin and a 30-day max TTL, supports logout/clear, and exposes status flags and errors via a React Context hook (useInternetIdentity).",
-      "reqIds": [],
-      "version": 1
-    },
-    {
-      "id": "IF-7",
-      "title": "Authenticated/anonymous ICP canister actor hook",
-      "synonyms": [
-        "useActor",
-        "actor factory hook"
-      ],
-      "description": "Provides a useActor hook that creates and caches a backend actor (backendInterface) either anonymously (no identity) or authenticated (agentOptions.identity), keyed by principal in React Query with infinite staleness; on actor availability, it invalidates and refetches all non-actor queries to ensure downstream queries use the latest identity-bound actor.",
-      "reqIds": [],
-      "version": 1
-    },
-    {
-      "id": "feature-update-the-final-carousel-slide-in-frontend-src-app-tsx-the-message-with-title-will-you-be-my-valentine-to-render-two-cta-buttons-yes-and-no",
-      "title": "Update the final carousel slide in `frontend/src/App.tsx` (the message with title \"Will You Be My Valentine?\") to render two CTA buttons: \"Yes\" and \"No\".",
+      "id": "feature-on-the-final-slide-will-you-be-my-valentine-after-the-user-clicks-the-existing-yes-button-and-the-forever-yours-content-is-shown-display-an-additional-cta-option-labeled-exactly-moments-without-changing-any-other-existing-behavior-or-styling-outside-this-addition",
+      "title": "On the final slide (\"Will You Be My Valentine?\"), after the user clicks the existing \"Yes! 💕\" button and the \"Forever Yours! 💕\" content is shown, display an additional CTA option labeled exactly \"Moments💞\" without changing any other existing behavior or styling outside this addition.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-implement-the-yes-button-behavior-when-clicked-replace-the-question-content-on-the-final-slide-with-a-thank-you-loving-message-that-includes-the-exact-phrase-you-are-forever-mine",
-      "title": "Implement the \"Yes\" button behavior: when clicked, replace the question content on the final slide with a thank-you, loving message that includes the exact phrase \"you are forever mine\".",
+      "id": "feature-implement-a-new-moments-page-screen-that-opens-when-the-user-clicks-moments-and-displays-the-two-uploaded-images-img-20251207-221903-037-2-webp-and-20260106-172708-2-jpg-along-with-a-single-lovely-english-message-and-romantic-decorative-styling-consistent-with-the-current-theme-hearts-soft-gradients-card-glass-effect",
+      "title": "Implement a new \"Moments\" page/screen that opens when the user clicks \"Moments💞\" and displays the two uploaded images (IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg) along with a single lovely English message and romantic decorative styling consistent with the current theme (hearts, soft gradients, card/glass effect).",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-implement-the-no-button-behavior-when-clicked-display-a-message-stating-there-is-no-choice-to-select-no-and-then-re-display-only-the-yes-option-do-not-continue-to-show-the-no-button-after-it-is-clicked",
-      "title": "Implement the \"No\" button behavior: when clicked, display a message stating there is no choice to select no, and then re-display only the \"Yes\" option (do not continue to show the \"No\" button after it is clicked).",
+      "id": "feature-fix-the-issue-where-uploaded-photos-are-not-visible-by-ensuring-the-two-uploaded-image-files-are-included-as-frontend-static-assets-and-referenced-correctly-so-they-load-in-production-builds",
+      "title": "Fix the issue where uploaded photos are not visible by ensuring the two uploaded image files are included as frontend static assets and referenced correctly so they load in production builds.",
       "reqIds": [
         "REQ-3"
       ],
@@ -109,32 +36,18 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Add Yes/No buttons on the final 'Will you be my valentine?' slide: Yes shows a thank-you loving message (including 'you are forever mine'); No shows a message that there is no choice to select no and re-displays Yes.",
+      "summary": "After user selects “Yes” on the Valentine page, display a “Moments💞” option that opens a new page showing uploaded photos with a lovely message and decorative styling.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Style the next/yes/moment option(s) in pink (UI color update).",
       "reqIds": [],
       "status": "pending"
     }
   ],
-  "architecturalNotes": [
-    "Frontend built with React function components and hooks; main UI is a single App component rendered via ReactDOM.createRoot.",
-    "State management uses local component state for UI (message index, intro transition) and React Context for authentication state.",
-    "Authentication integrates DFINITY Internet Identity via @dfinity/auth-client, wrapped in an InternetIdentityProvider context with explicit login/logout actions and status flags.",
-    "Data/actor lifecycle is managed with @tanstack/react-query: a QueryClientProvider at the root, and a useActor hook that caches an authenticated/anonymous backend actor keyed by principal.",
-    "Tailwind CSS design system uses CSS variables (OKLCH tokens) to define a romantic palette, supports dark mode via the 'class' strategy, and extends Tailwind with typography, container queries, and animate plugins.",
-    "Custom CSS animations (float-heart, heartbeat, shimmer, fade/slide/bounce) are implemented in a Tailwind utilities layer and consumed via utility class names.",
-    "ICP canister integration pattern: createActorWithConfig() is used to construct an anonymous or identity-bound actor (backendInterface) depending on authentication."
-  ],
-  "knownIssues": [
-    "Backend canister (backend/main.mo) is an empty actor with no exposed functionality; frontend actor scaffolding cannot call meaningful backend methods yet.",
-    "Two different index.css contents appear in the provided file list (duplicate 'frontend/index.css' vs 'frontend/src/index.css'); this suggests potential file duplication/confusion about which stylesheet is actually used (main.tsx imports './index.css' from src).",
-    "Floating hearts use Math.random() during render, so any re-render will reposition and change animation timing of all hearts (visual jitter).",
-    "useActor invalidates and refetches all non-actor queries whenever the actor instance becomes available; this can cause unnecessary network/refetch churn in larger apps.",
-    "DEFAULT_IDENTITY_PROVIDER is sourced from process.env.II_URL; if not configured, login may fail without a clear configuration-time validation."
-  ],
-  "isFixRequest": false,
-  "gameProjectType": "none",
-  "projectName": "Private Valentine's Website for Priyy🦋",
+  "projectName": "Add 'Moments💞' option after Yes and display uploaded photos on a new decorated page",
   "clarification_mode": "instant",
-  "clarification_rounds": 0,
-  "requiresBackendChanges": false,
-  "requiresFrontendChanges": true
+  "clarification_rounds": 0
 }

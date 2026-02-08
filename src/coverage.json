@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-03T18:58:39.399Z",
+  "generatedAt": "2026-02-08T18:17:24.290Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -12,7 +12,7 @@
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Update the final carousel slide in `frontend/src/App.tsx` (the message with title \"Will You Be My Valentine?\") to render two CTA buttons: \"Yes\" and \"No\".",
+        "summary": "On the final slide (\"Will You Be My Valentine?\"), after the user clicks the existing \"Yes! 💕\" button and the \"Forever Yours! 💕\" content is shown, display an additional CTA option labeled exactly \"Moments💞\" without changing any other existing behavior or styling outside this addition.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/App.tsx"
@@ -23,43 +23,40 @@
       },
       {
         "id": "REQ-2",
-        "summary": "Implement the \"Yes\" button behavior: when clicked, replace the question content on the final slide with a thank-you, loving message that includes the exact phrase \"you are forever mine\".",
+        "summary": "Implement a new \"Moments\" page/screen that opens when the user clicks \"Moments💞\" and displays the two uploaded images (IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg) along with a single lovely English message and romantic decorative styling consistent with the current theme (hearts, soft gradients, card/glass effect).",
         "status": "implemented",
         "plannedFiles": [
+          "frontend/src/pages/Moments.tsx",
           "frontend/src/App.tsx"
         ],
         "matchedFiles": [
+          "frontend/src/pages/Moments.tsx",
           "frontend/src/App.tsx"
         ]
       },
       {
         "id": "REQ-3",
-        "summary": "Implement the \"No\" button behavior: when clicked, display a message stating there is no choice to select no, and then re-display only the \"Yes\" option (do not continue to show the \"No\" button after it is clicked).",
+        "summary": "Fix the issue where uploaded photos are not visible by ensuring the two uploaded image files are included as frontend static assets and referenced correctly so they load in production builds.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/App.tsx"
+          "frontend/public/assets/IMG_20251207_221903_037-2.webp",
+          "frontend/public/assets/20260106_172708-2.jpg",
+          "frontend/src/pages/Moments.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/App.tsx"
+          "frontend/src/pages/Moments.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
     "build-request.json",
-    "build-template/Dockerfile",
-    "build-template/LICENSE",
-    "build-template/README.md",
-    "build-template/deploy.sh",
-    "build-template/icp.yaml",
-    "build-template/src/backend/canister.yaml",
-    "build-template/src/frontend/canister.yaml",
     "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
     "frontend/src/App.tsx",
-    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/pages/Moments.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

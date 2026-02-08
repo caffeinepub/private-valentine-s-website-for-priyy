@@ -1,71 +1,87 @@
 {
   "kind": "build_request",
-  "title": "Add Yes/No interaction on final 'Will You Be My Valentine?' slide",
+  "title": "Add 'Moments💞' option after Yes and display uploaded photos on a new decorated page",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Update the final carousel slide in `frontend/src/App.tsx` (the message with title \"Will You Be My Valentine?\") to render two CTA buttons: \"Yes\" and \"No\".",
+      "text": "On the final slide (\"Will You Be My Valentine?\"), after the user clicks the existing \"Yes! 💕\" button and the \"Forever Yours! 💕\" content is shown, display an additional CTA option labeled exactly \"Moments💞\" without changing any other existing behavior or styling outside this addition.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-7"
+          "msg-1"
         ],
         "quotes": [
-          "On the final slide of asking will you be my valentine? Add option yes or no."
+          "After selecting yes option in will you be my valentine page display a option called \"Moments💞\"."
         ]
       },
       "acceptanceCriteria": [
-        "When `currentMessageIndex` is on the last message (currently index 3), the UI shows both \"Yes\" and \"No\" buttons within the message card area."
+        "When the user clicks \"Yes! 💕\" on the final slide, the acceptance message (containing the phrase \"You are forever mine\") still appears as it does today.",
+        "After the acceptance message appears, a new clickable option labeled exactly \"Moments💞\" is visible on that same final slide.",
+        "The existing \"No\" behavior remains unchanged (still shows the rejection message and then only shows the \"Yes\" option afterward)."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Implement the \"Yes\" button behavior: when clicked, replace the question content on the final slide with a thank-you, loving message that includes the exact phrase \"you are forever mine\".",
+      "text": "Implement a new \"Moments\" page/screen that opens when the user clicks \"Moments💞\" and displays the two uploaded images (IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg) along with a single lovely English message and romantic decorative styling consistent with the current theme (hearts, soft gradients, card/glass effect).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-7"
+          "msg-1"
         ],
         "quotes": [
-          "When yes is pressed display a thank you loving message, highlighting you are forever mine."
+          "When it is clicked open a new page then show these photos i uploaded with a lovely message and decoration."
         ]
       },
       "acceptanceCriteria": [
-        "Clicking \"Yes\" displays a thank-you loving message on the final slide.",
-        "The displayed message includes the exact text: \"you are forever mine\"."
+        "Clicking \"Moments💞\" navigates to a distinct view (separate from the carousel view) that is clearly a new page/screen.",
+        "The Moments page renders both images: IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg.",
+        "A visible, readable English \"lovely message\" is present on the Moments page (exact wording may be chosen by the implementer).",
+        "The Moments page uses romantic decorations (e.g., hearts/accents/soft glow) and does not look like an unstyled raw image list.",
+        "The Moments page provides a clear way to return to the main Valentine carousel/final slide (e.g., a \"Back\" button)."
       ]
     },
     {
       "id": "REQ-3",
-      "text": "Implement the \"No\" button behavior: when clicked, display a message stating there is no choice to select no, and then re-display only the \"Yes\" option (do not continue to show the \"No\" button after it is clicked).",
+      "text": "Fix the issue where uploaded photos are not visible by ensuring the two uploaded image files are included as frontend static assets and referenced correctly so they load in production builds.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-7"
+          "msg-2"
         ],
         "quotes": [
-          "When no is clicked display there is no choice to select no and display yes again"
+          "Photos are not visible"
         ]
       },
       "acceptanceCriteria": [
-        "Clicking \"No\" displays an English message communicating that selecting \"No\" is not a real choice.",
-        "After clicking \"No\", the UI shows the \"Yes\" button again and does not show the \"No\" button."
+        "Both uploaded images load successfully on the Moments page in a deployed/production build (not only in local dev).",
+        "Images are served from the frontend as static files (not via the backend canister).",
+        "No broken image icons or 404s occur for IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg."
       ]
     }
   ],
   "constraints": [
-    "Do not add new backend canister methods; `backend/main.mo` must remain unchanged unless strictly required for this UI-only interaction.",
-    "Do not edit files under `frontend/src/components/ui` (compose existing UI components like `Button` instead).",
-    "Use English for any user-facing text."
+    "Do not modify any files under frontend/src/components/ui (compose existing UI components only).",
+    "Do not edit the immutable hook/bootstrap files listed in SYSTEM_CONTEXT (frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx).",
+    "Keep the existing Valentine carousel content and Yes/No behaviors unchanged except for adding the \"Moments💞\" option and the new Moments page."
   ],
   "nonGoals": [
-    "Persisting the Yes/No choice to the backend.",
-    "Adding new authentication flows or requiring Internet Identity login.",
-    "Adding new slides to the carousel or changing existing slide text outside the final-slide interaction."
+    "Adding backend storage, upload flows, or any database for photos.",
+    "Adding Internet Identity login requirements for viewing Moments.",
+    "Creating additional slides or changing existing Valentine text beyond what is necessary to add the new option/page."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

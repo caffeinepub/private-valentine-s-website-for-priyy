@@ -1,49 +1,70 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Yes/No interaction on final Valentine carousel slide",
+  "title": "Add Moments CTA and new Moments screen with static photo assets",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Render \"Yes\" and \"No\" CTA buttons within the final carousel slide message card area.",
+      "summary": "After acceptance on the final slide, show an additional CTA labeled exactly \"Moments💞\" without changing existing Yes/No behaviors.",
       "acceptanceCriteria": [
-        "When `currentMessageIndex` is on the last message (currently index 3), the UI shows both \"Yes\" and \"No\" buttons within the message card area."
+        "When the user clicks \"Yes! 💕\" on the final slide, the acceptance message (containing the phrase \"You are forever mine\") still appears as it does today.",
+        "After the acceptance message appears, a new clickable option labeled exactly \"Moments💞\" is visible on that same final slide.",
+        "The existing \"No\" behavior remains unchanged (still shows the rejection message and then only shows the \"Yes\" option afterward)."
       ],
       "file_operations": [
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Update the final slide rendering to include a CTA area inside the message card that conditionally shows two buttons, \"Yes\" and \"No\", when the user is on the last slide. Use the shadcn-ui `Button` component for the CTAs (Verify the component's usage instructions before implementing)."
+          "description": "Add a new \"Moments💞\" CTA that renders only when the final slide state is \"yes-accepted\", placed after the existing acceptance content so current Yes/No behavior and styling remains unchanged. Use the shadcn-ui Button component (already used in this file) to keep CTA styling consistent; verify the component's usage instructions before implementing."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Implement the \"Yes\" click behavior to replace the final-slide question with a thank-you loving message containing the phrase \"you are forever mine\".",
+      "summary": "Create a distinct Moments screen showing both uploaded photos, a lovely English message, romantic decorations, and a clear way back to the main carousel.",
       "acceptanceCriteria": [
-        "Clicking \"Yes\" displays a thank-you loving message on the final slide.",
-        "The displayed message includes the exact text: \"you are forever mine\"."
+        "Clicking \"Moments💞\" navigates to a distinct view (separate from the carousel view) that is clearly a new page/screen.",
+        "The Moments page renders both images: IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg.",
+        "A visible, readable English \"lovely message\" is present on the Moments page (exact wording may be chosen by the implementer).",
+        "The Moments page uses romantic decorations (e.g., hearts/accents/soft glow) and does not look like an unstyled raw image list.",
+        "The Moments page provides a clear way to return to the main Valentine carousel/final slide (e.g., a \"Back\" button)."
       ],
       "file_operations": [
         {
+          "path": "frontend/src/pages/Moments.tsx",
+          "operation": "create",
+          "description": "Implement the Moments screen UI: a romantic decorated layout (hearts/soft gradients/glass-card effect consistent with the existing theme), render both images, and include one lovely English message plus a clear Back control. Use the existing shadcn-ui Button component for the Back control and any CTA styling consistency; verify the component's usage instructions before implementing."
+        },
+        {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Add local UI state for the final slide interaction and wire the \"Yes\" button onClick to switch the final slide content from the original question to a thank-you loving message that includes the exact phrase \"you are forever mine\". Use English for the user-facing text and keep changes limited to the final-slide interaction. Use the shadcn-ui `Button` component for the CTA (Verify the component's usage instructions before implementing)."
+          "description": "Wire the new Moments screen into the app by adding a lightweight view toggle (carousel vs Moments) and a click handler for \"Moments💞\" to show the Moments screen, plus a Back handler to return to the carousel. Keep the existing carousel content and Yes/No logic unchanged aside from adding this navigation."
         }
       ]
     },
     {
       "id": "REQ-3",
-      "summary": "Implement the \"No\" click behavior to show a message that \"No\" is not a real choice and then re-display only the \"Yes\" option.",
+      "summary": "Ensure uploaded photos are shipped as frontend static assets and referenced correctly so they load in production builds.",
       "acceptanceCriteria": [
-        "Clicking \"No\" displays an English message communicating that selecting \"No\" is not a real choice.",
-        "After clicking \"No\", the UI shows the \"Yes\" button again and does not show the \"No\" button."
+        "Both uploaded images load successfully on the Moments page in a deployed/production build (not only in local dev).",
+        "Images are served from the frontend as static files (not via the backend canister).",
+        "No broken image icons or 404s occur for IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/public/assets/IMG_20251207_221903_037-2.webp",
+          "operation": "create",
+          "description": "Add the uploaded image as a public static asset so it is served by the frontend in production builds."
+        },
+        {
+          "path": "frontend/public/assets/20260106_172708-2.jpg",
+          "operation": "create",
+          "description": "Add the uploaded image as a public static asset so it is served by the frontend in production builds."
+        },
+        {
+          "path": "frontend/src/pages/Moments.tsx",
           "operation": "modify",
-          "description": "Extend the final-slide interaction state to support a \"No\" selection: on \"No\" click, replace the final slide content with an English message indicating there is no real choice to select \"No\", and update the CTA area to render only the \"Yes\" button (hide the \"No\" button) after \"No\" has been clicked. Use the shadcn-ui `Button` component for the remaining CTA (Verify the component's usage instructions before implementing)."
+          "description": "Reference the images using production-safe public static paths pointing to frontend/public/assets/IMG_20251207_221903_037-2.webp and frontend/public/assets/20260106_172708-2.jpg so they load reliably after deployment."
         }
       ]
     }

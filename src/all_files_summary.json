@@ -1,14 +1,15 @@
 {
-  "backend/main.mo": "Defines an empty Motoko actor with no methods or state, serving as a placeholder backend canister.",
-  "feature_evidence.json": "Feature evidence report describing three frontend features for the final carousel slide, including Yes/No CTA behavior, affected files, components, and test IDs.",
-  "frontend-file-summaries.txt": "Prewritten high-level summaries of key frontend files, outlining the app’s Valentine-themed UI, styling, and Tailwind configuration.",
-  "frontend/index.css": "Base Tailwind CSS setup defining global design tokens, color variables, and light/dark theme styles used across the frontend.",
-  "frontend/index.html": "HTML entry point that sets the page metadata and mounts the React app at the root element.",
-  "frontend/src/App.tsx": "Main React component implementing the Valentine’s message carousel, animated visuals, and final Yes/No interaction logic with state-driven content changes.",
-  "frontend/src/hooks/useActor.ts": "React hook that creates and caches a backend actor using React Query, reinitializing it when the user’s Internet Identity changes.",
-  "frontend/src/hooks/useInternetIdentity.ts": "Authentication context and hooks for managing Internet Identity login state, identity persistence, and login/logout flows.",
-  "frontend/src/index.css": "Extended Tailwind stylesheet with a romantic color palette, light/dark themes, and custom animations such as floating hearts and heartbeat effects.",
-  "frontend/src/main.tsx": "Application bootstrap that renders the React app with React Query and Internet Identity providers and loads global styles.",
-  "frontend/tailwind.config.js": "Tailwind CSS configuration enabling class-based dark mode, scanning frontend source files, and extending the theme with container settings, OKLCH-based color tokens, custom fonts, radii, shadows, and animations for a romantic UI. Includes typography, container queries, and animation plugins.",
-  "project_state.json": "Project metadata describing a React + Tailwind single-page romantic Valentine’s website with animated message carousel, romantic theming, and ambient visuals. Also documents scaffolding for React Query, Internet Identity authentication, and ICP canister actor hooks, with an otherwise empty backend."
+  "backend/main.mo": "Empty Motoko actor with no methods defined.",
+  "feature_evidence.json": "Feature report listing three Valentine-related frontend features and the files they modify.",
+  "frontend-file-summaries.txt": "Prewritten summaries describing the main app, styles, Tailwind config, and the Moments page.",
+  "frontend/index.css": "Tailwind base theme defining OKLCH variables and dark‑mode overrides for layout and color tokens.",
+  "frontend/index.html": "HTML entry point mounting the React app and loading main.tsx.",
+  "frontend/src/App.tsx": "Main React component showing a romantic message carousel, final‑slide Yes/No logic, and navigation to the Moments page.",
+  "frontend/src/hooks/useActor.ts": "React hook that creates and caches a backend actor tied to the user's Internet Identity and refreshes dependent queries.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Authentication provider and hook managing Internet Identity login, stored identities, and status states.",
+  "frontend/src/index.css": "Extended Tailwind theme with romantic color variables, dark mode overrides, and custom animations like floating hearts.",
+  "frontend/src/main.tsx": "React entry script initializing QueryClient, InternetIdentityProvider, and rendering the App component.",
+  "frontend/src/pages/Moments.tsx": "React page displaying a romantic-themed layout with backgrounds, floating hearts, a message card, and a photo gallery; includes a back button handler.",
+  "frontend/tailwind.config.js": "Tailwind configuration extending colors, fonts, animations, and theme settings including custom romantic color palette and plugins.",
+  "project_state.json": "Project metadata describing requirements for a Moments page, issues with missing uploaded photos, and feature request statuses."
 }
