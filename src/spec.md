@@ -1,11 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Add a “Moments💞” call-to-action after accepting the Valentine proposal, leading to a new decorated Moments page that shows the uploaded photos reliably in production.
+**Goal:** Add a full-screen love emoji + maroon/pink/blue balloon transition animation when the user clicks the “Yes! 💕” button on the final “Will You Be My Valentine?” slide, without changing any other app behavior or visuals.
 
 **Planned changes:**
-- On the final “Will You Be My Valentine?” slide, after the user clicks “Yes! 💕” and the existing “Forever Yours! 💕” acceptance content appears, add a new clickable option labeled exactly “Moments💞”.
-- Create a new “Moments” page/screen (separate from the carousel) that opens when “Moments💞” is clicked and displays the two uploaded images (IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg) plus a single lovely English message, styled with romantic decorations consistent with the current theme (hearts, soft gradients, card/glass effect).
-- Ensure the two uploaded images are included and referenced as frontend static assets so they load in production builds without broken links, and add a clear way to return back to the main Valentine carousel (e.g., a Back button).
+- Add a React-controlled, full-screen overlay transition that triggers only on clicking the existing “Yes! 💕” button on the final carousel slide.
+- Implement floating love emoji elements and balloon-like elements that animate across the screen, ensuring maroon, pink, and blue balloons are all present.
+- Block user interaction with the underlying UI during the overlay while keeping the underlying layout visually unchanged, then continue to the existing accepted state (“Forever Yours! 💕” + “Moments💞” CTA) exactly as before.
+- Add any needed CSS keyframes/utility classes using the existing Tailwind/CSS approach (e.g., in the existing global styling locations), without touching immutable UI component paths or backend code.
 
-**User-visible outcome:** After tapping “Yes! 💕”, the user can tap “Moments💞” to open a new romantic Moments page showing the two uploaded photos and a lovely message, with a clear option to return to the main Valentine screen.
+**User-visible outcome:** When the user clicks “Yes! 💕” on the final Valentine slide, a brief full-screen transition of floating love emojis and maroon/pink/blue balloons plays, then the app proceeds to the same accepted state as it did previously.

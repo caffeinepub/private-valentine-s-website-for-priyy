@@ -1,34 +1,24 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Valentine prompt app: after selecting “Yes” on the “Will you be my valentine” page, show a “Moments💞” option that opens a new page displaying uploaded photos with a lovely decorated message.",
+  "summary": "Valentine-themed app; add an animated transition when the user clicks Yes on the \"Will you be my valentine?\" page.",
   "architectural_notes": [],
-  "known_issues": [
-    "Uploaded photos are not visible/not showing in the app (needs investigation/fix)."
-  ],
-  "isFixRequest": true,
+  "known_issues": [],
+  "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-on-the-final-slide-will-you-be-my-valentine-after-the-user-clicks-the-existing-yes-button-and-the-forever-yours-content-is-shown-display-an-additional-cta-option-labeled-exactly-moments-without-changing-any-other-existing-behavior-or-styling-outside-this-addition",
-      "title": "On the final slide (\"Will You Be My Valentine?\"), after the user clicks the existing \"Yes! 💕\" button and the \"Forever Yours! 💕\" content is shown, display an additional CTA option labeled exactly \"Moments💞\" without changing any other existing behavior or styling outside this addition.",
+      "id": "feature-keep-the-app-behavior-and-ui-the-same-except-when-the-user-clicks-the-existing-yes-button-on-the-final-slide-will-you-be-my-valentine-play-a-full-screen-transition-animation-featuring-floating-love-emojis-and-maroon-pink-blue-love-balloons-flying-across-the-screen",
+      "title": "Keep the app behavior and UI the same, except: when the user clicks the existing “Yes! 💕” button on the final slide (“Will You Be My Valentine?”), play a full-screen transition animation featuring floating love emojis and maroon/pink/blue love balloons flying across the screen.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-implement-a-new-moments-page-screen-that-opens-when-the-user-clicks-moments-and-displays-the-two-uploaded-images-img-20251207-221903-037-2-webp-and-20260106-172708-2-jpg-along-with-a-single-lovely-english-message-and-romantic-decorative-styling-consistent-with-the-current-theme-hearts-soft-gradients-card-glass-effect",
-      "title": "Implement a new \"Moments\" page/screen that opens when the user clicks \"Moments💞\" and displays the two uploaded images (IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg) along with a single lovely English message and romantic decorative styling consistent with the current theme (hearts, soft gradients, card/glass effect).",
+      "id": "feature-implement-the-transition-animation-using-project-styling-conventions-tailwind-existing-css-animation-approach-by-adding-any-required-new-keyframes-utility-classes-and-rendering-a-react-overlay-within-the-existing-app-component-flow",
+      "title": "Implement the transition animation using project styling conventions (Tailwind + existing CSS animation approach) by adding any required new keyframes/utility classes and rendering a React overlay within the existing App component flow.",
       "reqIds": [
         "REQ-2"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-fix-the-issue-where-uploaded-photos-are-not-visible-by-ensuring-the-two-uploaded-image-files-are-included-as-frontend-static-assets-and-referenced-correctly-so-they-load-in-production-builds",
-      "title": "Fix the issue where uploaded photos are not visible by ensuring the two uploaded image files are included as frontend static assets and referenced correctly so they load in production builds.",
-      "reqIds": [
-        "REQ-3"
       ],
       "version": 1
     }
@@ -36,18 +26,13 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "After user selects “Yes” on the Valentine page, display a “Moments💞” option that opens a new page showing uploaded photos with a lovely message and decorative styling.",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Style the next/yes/moment option(s) in pink (UI color update).",
+      "summary": "On \"Will you be my valentine?\" page, when Yes is clicked, show a screen transition animation with love emojis and maroon/pink/blue love balloons flying.",
       "reqIds": [],
       "status": "pending"
     }
   ],
-  "projectName": "Add 'Moments💞' option after Yes and display uploaded photos on a new decorated page",
+  "gameProjectType": "none",
+  "projectName": "Add love emoji + balloon screen transition on Yes click",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

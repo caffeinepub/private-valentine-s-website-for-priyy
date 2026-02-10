@@ -2,10 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-on-the-final-slide-will-you-be-my-valentine-after-the-user-clicks-the-existing-yes-button-and-the-forever-yours-content-is-shown-display-an-additional-cta-option-labeled-exactly-moments-without-changing-any-other-existing-behavior-or-styling-outside-this-addition",
-      "featureTitle": "On the final slide (\"Will You Be My Valentine?\"), after the user clicks the existing \"Yes! 💕\" button and the \"Forever Yours! 💕\" content is shown, display an additional CTA option labeled exactly \"Moments💞\" without changing any other existing behavior or styling outside this addition.",
+      "featureId": "feature-keep-the-app-behavior-and-ui-the-same-except-when-the-user-clicks-the-existing-yes-button-on-the-final-slide-will-you-be-my-valentine-play-a-full-screen-transition-animation-featuring-floating-love-emojis-and-maroon-pink-blue-love-balloons-flying-across-the-screen",
+      "featureTitle": "Keep the app behavior and UI the same, except: when the user clicks the existing “Yes! 💕” button on the final slide (“Will You Be My Valentine?”), play a full-screen transition animation featuring floating love emojis and maroon/pink/blue love balloons flying across the screen.",
       "files": [
-        "frontend/src/App.tsx"
+        "frontend/src/App.tsx",
+        "frontend/src/components/LoveTransitionOverlay.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -20,11 +21,11 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-a-new-moments-page-screen-that-opens-when-the-user-clicks-moments-and-displays-the-two-uploaded-images-img-20251207-221903-037-2-webp-and-20260106-172708-2-jpg-along-with-a-single-lovely-english-message-and-romantic-decorative-styling-consistent-with-the-current-theme-hearts-soft-gradients-card-glass-effect",
-      "featureTitle": "Implement a new \"Moments\" page/screen that opens when the user clicks \"Moments💞\" and displays the two uploaded images (IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg) along with a single lovely English message and romantic decorative styling consistent with the current theme (hearts, soft gradients, card/glass effect).",
+      "featureId": "feature-implement-the-transition-animation-using-project-styling-conventions-tailwind-existing-css-animation-approach-by-adding-any-required-new-keyframes-utility-classes-and-rendering-a-react-overlay-within-the-existing-app-component-flow",
+      "featureTitle": "Implement the transition animation using project styling conventions (Tailwind + existing CSS animation approach) by adding any required new keyframes/utility classes and rendering a React overlay within the existing App component flow.",
       "files": [
         "frontend/src/App.tsx",
-        "frontend/src/pages/Moments.tsx"
+        "frontend/src/index.css"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -35,24 +36,6 @@
       ],
       "testIds": [
         "REQ-2"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-fix-the-issue-where-uploaded-photos-are-not-visible-by-ensuring-the-two-uploaded-image-files-are-included-as-frontend-static-assets-and-referenced-correctly-so-they-load-in-production-builds",
-      "featureTitle": "Fix the issue where uploaded photos are not visible by ensuring the two uploaded image files are included as frontend static assets and referenced correctly so they load in production builds.",
-      "files": [
-        "frontend/src/pages/Moments.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-3"
       ],
       "confidence": "high"
     }

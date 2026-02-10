@@ -1,70 +1,49 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add Moments CTA and new Moments screen with static photo assets",
+  "title": "Love emoji + balloon full-screen transition on final Yes click",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "After acceptance on the final slide, show an additional CTA labeled exactly \"Moments💞\" without changing existing Yes/No behaviors.",
+      "summary": "Trigger a full-screen love emoji + maroon/pink/blue balloon transition overlay when clicking the final slide “Yes! 💕”, blocking interaction until it finishes, then continue to the existing accepted state unchanged.",
       "acceptanceCriteria": [
-        "When the user clicks \"Yes! 💕\" on the final slide, the acceptance message (containing the phrase \"You are forever mine\") still appears as it does today.",
-        "After the acceptance message appears, a new clickable option labeled exactly \"Moments💞\" is visible on that same final slide.",
-        "The existing \"No\" behavior remains unchanged (still shows the rejection message and then only shows the \"Yes\" option afterward)."
+        "On the final carousel slide, clicking the “Yes! 💕” button triggers a full-screen overlay animation (screen transition) that includes visible love emojis and balloon-like elements.",
+        "The balloon elements use maroon, pink, and blue colors (all three colors must be present in the animation).",
+        "During the transition overlay, the underlying UI remains visually unchanged (no layout shifts), and user interaction with underlying elements is blocked until the animation completes.",
+        "After the transition finishes, the app proceeds exactly as it did before the change (i.e., it shows the existing “Forever Yours! 💕” accepted state and the existing “Moments💞” CTA, with no other behavior changes).",
+        "No other screens (including the Moments page) change their visuals or behavior as a result of this feature."
       ],
       "file_operations": [
         {
+          "path": "frontend/src/components/LoveTransitionOverlay.tsx",
+          "operation": "create",
+          "description": "Create a reusable full-screen React overlay component that renders animated floating love emojis plus balloon-like elements in maroon, pink, and blue; ensure the overlay captures pointer events to block underlying interactions and can signal completion after a fixed animation duration."
+        },
+        {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Add a new \"Moments💞\" CTA that renders only when the final slide state is \"yes-accepted\", placed after the existing acceptance content so current Yes/No behavior and styling remains unchanged. Use the shadcn-ui Button component (already used in this file) to keep CTA styling consistent; verify the component's usage instructions before implementing."
+          "description": "Update the existing final-slide “Yes! 💕” click flow to (1) show the LoveTransitionOverlay full-screen transition, (2) prevent additional underlying interactions while it is visible, and (3) only set the existing yes-accepted state after the overlay completes so the app continues exactly as before."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Create a distinct Moments screen showing both uploaded photos, a lovely English message, romantic decorations, and a clear way back to the main carousel.",
+      "summary": "Implement the transition using Tailwind + the existing CSS animation approach, wiring the overlay into the current App flow without affecting carousel/Moments navigation.",
       "acceptanceCriteria": [
-        "Clicking \"Moments💞\" navigates to a distinct view (separate from the carousel view) that is clearly a new page/screen.",
-        "The Moments page renders both images: IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg.",
-        "A visible, readable English \"lovely message\" is present on the Moments page (exact wording may be chosen by the implementer).",
-        "The Moments page uses romantic decorations (e.g., hearts/accents/soft glow) and does not look like an unstyled raw image list.",
-        "The Moments page provides a clear way to return to the main Valentine carousel/final slide (e.g., a \"Back\" button)."
+        "The animation is implemented in the frontend without adding backend dependencies.",
+        "Animation-related styles are added in the existing styling system (e.g., in frontend/src/index.css and/or Tailwind utilities) without modifying any immutable frontend paths.",
+        "The overlay is rendered/controlled from the existing Valentine page flow in frontend/src/App.tsx and does not break navigation between carousel and Moments views."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/Moments.tsx",
-          "operation": "create",
-          "description": "Implement the Moments screen UI: a romantic decorated layout (hearts/soft gradients/glass-card effect consistent with the existing theme), render both images, and include one lovely English message plus a clear Back control. Use the existing shadcn-ui Button component for the Back control and any CTA styling consistency; verify the component's usage instructions before implementing."
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add new keyframes and utility classes for the transition (e.g., love-emoji float/drift + balloon fly across screen) following the existing custom-animation pattern used by animate-float-heart."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Wire the new Moments screen into the app by adding a lightweight view toggle (carousel vs Moments) and a click handler for \"Moments💞\" to show the Moments screen, plus a Back handler to return to the carousel. Keep the existing carousel content and Yes/No logic unchanged aside from adding this navigation."
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "Ensure uploaded photos are shipped as frontend static assets and referenced correctly so they load in production builds.",
-      "acceptanceCriteria": [
-        "Both uploaded images load successfully on the Moments page in a deployed/production build (not only in local dev).",
-        "Images are served from the frontend as static files (not via the backend canister).",
-        "No broken image icons or 404s occur for IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/public/assets/IMG_20251207_221903_037-2.webp",
-          "operation": "create",
-          "description": "Add the uploaded image as a public static asset so it is served by the frontend in production builds."
-        },
-        {
-          "path": "frontend/public/assets/20260106_172708-2.jpg",
-          "operation": "create",
-          "description": "Add the uploaded image as a public static asset so it is served by the frontend in production builds."
-        },
-        {
-          "path": "frontend/src/pages/Moments.tsx",
-          "operation": "modify",
-          "description": "Reference the images using production-safe public static paths pointing to frontend/public/assets/IMG_20251207_221903_037-2.webp and frontend/public/assets/20260106_172708-2.jpg so they load reliably after deployment."
+          "description": "Wire the overlay rendering into the existing component tree (fixed, top-most layer) and ensure the transition state is scoped only to the final-slide Yes click path, leaving Moments and all other UI/behavior unchanged."
         }
       ]
     }

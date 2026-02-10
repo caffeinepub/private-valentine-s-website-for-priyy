@@ -1,87 +1,58 @@
 {
   "kind": "build_request",
-  "title": "Add 'Moments💞' option after Yes and display uploaded photos on a new decorated page",
+  "title": "Add love emoji + balloon screen transition on Yes click",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "On the final slide (\"Will You Be My Valentine?\"), after the user clicks the existing \"Yes! 💕\" button and the \"Forever Yours! 💕\" content is shown, display an additional CTA option labeled exactly \"Moments💞\" without changing any other existing behavior or styling outside this addition.",
+      "text": "Keep the app behavior and UI the same, except: when the user clicks the existing “Yes! 💕” button on the final slide (“Will You Be My Valentine?”), play a full-screen transition animation featuring floating love emojis and maroon/pink/blue love balloons flying across the screen.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "After selecting yes option in will you be my valentine page display a option called \"Moments💞\"."
+          "Keep every single thing same.\nJust When Yes button is clicked on Will you be my valentine? Page Make a screen transition of love emojis and Maroon, pink, blue  love balloon flying"
         ]
       },
       "acceptanceCriteria": [
-        "When the user clicks \"Yes! 💕\" on the final slide, the acceptance message (containing the phrase \"You are forever mine\") still appears as it does today.",
-        "After the acceptance message appears, a new clickable option labeled exactly \"Moments💞\" is visible on that same final slide.",
-        "The existing \"No\" behavior remains unchanged (still shows the rejection message and then only shows the \"Yes\" option afterward)."
+        "On the final carousel slide, clicking the “Yes! 💕” button triggers a full-screen overlay animation (screen transition) that includes visible love emojis and balloon-like elements.",
+        "The balloon elements use maroon, pink, and blue colors (all three colors must be present in the animation).",
+        "During the transition overlay, the underlying UI remains visually unchanged (no layout shifts), and user interaction with underlying elements is blocked until the animation completes.",
+        "After the transition finishes, the app proceeds exactly as it did before the change (i.e., it shows the existing “Forever Yours! 💕” accepted state and the existing “Moments💞” CTA, with no other behavior changes).",
+        "No other screens (including the Moments page) change their visuals or behavior as a result of this feature."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Implement a new \"Moments\" page/screen that opens when the user clicks \"Moments💞\" and displays the two uploaded images (IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg) along with a single lovely English message and romantic decorative styling consistent with the current theme (hearts, soft gradients, card/glass effect).",
+      "text": "Implement the transition animation using project styling conventions (Tailwind + existing CSS animation approach) by adding any required new keyframes/utility classes and rendering a React overlay within the existing App component flow.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "When it is clicked open a new page then show these photos i uploaded with a lovely message and decoration."
+          "Make a screen transition of love emojis and Maroon, pink, blue  love balloon flying"
         ]
       },
       "acceptanceCriteria": [
-        "Clicking \"Moments💞\" navigates to a distinct view (separate from the carousel view) that is clearly a new page/screen.",
-        "The Moments page renders both images: IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg.",
-        "A visible, readable English \"lovely message\" is present on the Moments page (exact wording may be chosen by the implementer).",
-        "The Moments page uses romantic decorations (e.g., hearts/accents/soft glow) and does not look like an unstyled raw image list.",
-        "The Moments page provides a clear way to return to the main Valentine carousel/final slide (e.g., a \"Back\" button)."
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Fix the issue where uploaded photos are not visible by ensuring the two uploaded image files are included as frontend static assets and referenced correctly so they load in production builds.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "Photos are not visible"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Both uploaded images load successfully on the Moments page in a deployed/production build (not only in local dev).",
-        "Images are served from the frontend as static files (not via the backend canister).",
-        "No broken image icons or 404s occur for IMG_20251207_221903_037-2.webp and 20260106_172708-2.jpg."
+        "The animation is implemented in the frontend without adding backend dependencies.",
+        "Animation-related styles are added in the existing styling system (e.g., in frontend/src/index.css and/or Tailwind utilities) without modifying any immutable frontend paths.",
+        "The overlay is rendered/controlled from the existing Valentine page flow in frontend/src/App.tsx and does not break navigation between carousel and Moments views."
       ]
     }
   ],
   "constraints": [
-    "Do not modify any files under frontend/src/components/ui (compose existing UI components only).",
-    "Do not edit the immutable hook/bootstrap files listed in SYSTEM_CONTEXT (frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx).",
-    "Keep the existing Valentine carousel content and Yes/No behaviors unchanged except for adding the \"Moments💞\" option and the new Moments page."
+    "Do not change any behavior or styling outside the “Yes” click transition on the final “Will You Be My Valentine?” slide.",
+    "Backend must remain unchanged (backend/main.mo stays with no new functionality).",
+    "Do not edit any files under frontend/src/components/ui or any other immutable paths listed in SYSTEM_CONTEXT."
   ],
   "nonGoals": [
-    "Adding backend storage, upload flows, or any database for photos.",
-    "Adding Internet Identity login requirements for viewing Moments.",
-    "Creating additional slides or changing existing Valentine text beyond what is necessary to add the new option/page."
+    "Adding new pages, new buttons, or changing any copy beyond what is required to support the transition.",
+    "Implementing real-time effects, audio, or backend-driven animation state."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

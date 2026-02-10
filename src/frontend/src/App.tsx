@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import { Heart, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Moments from '@/pages/Moments';
+import { LoveTransitionOverlay } from '@/components/LoveTransitionOverlay';
 
 function App() {
   const [showContent, setShowContent] = useState(false);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [finalSlideState, setFinalSlideState] = useState<'question' | 'no-rejected' | 'yes-accepted'>('question');
   const [currentView, setCurrentView] = useState<'carousel' | 'moments'>('carousel');
+  const [showTransition, setShowTransition] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowContent(true), 500);
@@ -50,6 +52,13 @@ function App() {
   };
 
   const handleYesClick = () => {
+    // Show the transition overlay
+    setShowTransition(true);
+  };
+
+  const handleTransitionComplete = () => {
+    // After transition completes, set the accepted state
+    setShowTransition(false);
     setFinalSlideState('yes-accepted');
   };
 
@@ -284,9 +293,9 @@ function App() {
       {/* Footer */}
       <footer className="relative z-20 py-6 text-center">
         <p className="text-romantic-text/80 text-sm flex items-center justify-center gap-2">
-          © 2026. Built with <Heart className="text-romantic-accent fill-romantic-accent inline w-4 h-4 animate-heartbeat" /> using{' '}
+          © {new Date().getFullYear()}. Built with <Heart className="text-romantic-accent fill-romantic-accent inline w-4 h-4 animate-heartbeat" /> using{' '}
           <a
-            href="https://caffeine.ai"
+            href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-romantic-deep hover:text-romantic-accent transition-colors underline"
@@ -295,6 +304,9 @@ function App() {
           </a>
         </p>
       </footer>
+
+      {/* Love Transition Overlay */}
+      {showTransition && <LoveTransitionOverlay onComplete={handleTransitionComplete} />}
     </div>
   );
 }
