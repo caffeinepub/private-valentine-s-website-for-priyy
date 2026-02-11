@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-keep-the-app-behavior-and-ui-the-same-except-when-the-user-clicks-the-existing-yes-button-on-the-final-slide-will-you-be-my-valentine-play-a-full-screen-transition-animation-featuring-floating-love-emojis-and-maroon-pink-blue-love-balloons-flying-across-the-screen",
-      "featureTitle": "Keep the app behavior and UI the same, except: when the user clicks the existing “Yes! 💕” button on the final slide (“Will You Be My Valentine?”), play a full-screen transition animation featuring floating love emojis and maroon/pink/blue love balloons flying across the screen.",
+      "featureId": "feature-ensure-that-clicking-the-existing-yes-button-on-the-final-slide-reliably-shows-the-full-screen-transition-overlay-with-visible-animated-floating-hearts-and-the-existing-emojis-balloons-moving-upward-across-the-screen",
+      "featureTitle": "Ensure that clicking the existing “Yes! 💕” button on the final slide reliably shows the full-screen transition overlay with visible, animated floating hearts (and the existing emojis/balloons) moving upward across the screen.",
       "files": [
         "frontend/src/App.tsx",
         "frontend/src/components/LoveTransitionOverlay.tsx"
@@ -21,10 +21,10 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-the-transition-animation-using-project-styling-conventions-tailwind-existing-css-animation-approach-by-adding-any-required-new-keyframes-utility-classes-and-rendering-a-react-overlay-within-the-existing-app-component-flow",
-      "featureTitle": "Implement the transition animation using project styling conventions (Tailwind + existing CSS animation approach) by adding any required new keyframes/utility classes and rendering a React overlay within the existing App component flow.",
+      "featureId": "feature-fix-the-transition-animation-implementation-so-transforms-that-depend-on-css-variables-do-not-resolve-to-invalid-values-e-g-provide-a-fallback-and-or-set-required-css-custom-properties-per-element-to-prevent-the-floating-animations-from-being-dropped-by-the-browser",
+      "featureTitle": "Fix the transition animation implementation so transforms that depend on CSS variables do not resolve to invalid values (e.g., provide a fallback and/or set required CSS custom properties per element) to prevent the floating animations from being dropped by the browser.",
       "files": [
-        "frontend/src/App.tsx",
+        "frontend/src/components/LoveTransitionOverlay.tsx",
         "frontend/src/index.css"
       ],
       "components": [
@@ -36,6 +36,24 @@
       ],
       "testIds": [
         "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-lucide-heart-icon-rendering-used-for-the-flying-hearts-so-size-is-controlled-via-svg-appropriate-properties-e-g-width-height-or-component-props-rather-than-fontsize-ensuring-the-hearts-render-at-the-intended-random-sizes",
+      "featureTitle": "Update the lucide Heart icon rendering used for the flying hearts so size is controlled via SVG-appropriate properties (e.g., width/height or component props) rather than fontSize, ensuring the hearts render at the intended random sizes.",
+      "files": [
+        "frontend/src/components/LoveTransitionOverlay.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
       ],
       "confidence": "high"
     }

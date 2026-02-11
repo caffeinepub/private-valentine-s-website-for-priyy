@@ -1,58 +1,82 @@
 {
   "kind": "build_request",
-  "title": "Add love emoji + balloon screen transition on Yes click",
-  "priority": "normal",
+  "title": "Fix missing flying hearts animation when clicking “Yes”",
+  "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Keep the app behavior and UI the same, except: when the user clicks the existing “Yes! 💕” button on the final slide (“Will You Be My Valentine?”), play a full-screen transition animation featuring floating love emojis and maroon/pink/blue love balloons flying across the screen.",
+      "text": "Ensure that clicking the existing “Yes! 💕” button on the final slide reliably shows the full-screen transition overlay with visible, animated floating hearts (and the existing emojis/balloons) moving upward across the screen.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-3"
         ],
         "quotes": [
-          "Keep every single thing same.\nJust When Yes button is clicked on Will you be my valentine? Page Make a screen transition of love emojis and Maroon, pink, blue  love balloon flying"
+          "No heart are flying when clicking yes"
         ]
       },
       "acceptanceCriteria": [
-        "On the final carousel slide, clicking the “Yes! 💕” button triggers a full-screen overlay animation (screen transition) that includes visible love emojis and balloon-like elements.",
-        "The balloon elements use maroon, pink, and blue colors (all three colors must be present in the animation).",
-        "During the transition overlay, the underlying UI remains visually unchanged (no layout shifts), and user interaction with underlying elements is blocked until the animation completes.",
-        "After the transition finishes, the app proceeds exactly as it did before the change (i.e., it shows the existing “Forever Yours! 💕” accepted state and the existing “Moments💞” CTA, with no other behavior changes).",
-        "No other screens (including the Moments page) change their visuals or behavior as a result of this feature."
+        "On the final slide, clicking “Yes! 💕” renders the LoveTransitionOverlay for ~3 seconds and then returns to the accepted state content.",
+        "During the overlay, heart elements are clearly visible (not zero-size) and animate upward (not static).",
+        "The overlay animation works consistently across multiple consecutive clicks on “Yes! 💕” (no intermittent failures due to randomization/state)."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Implement the transition animation using project styling conventions (Tailwind + existing CSS animation approach) by adding any required new keyframes/utility classes and rendering a React overlay within the existing App component flow.",
+      "text": "Fix the transition animation implementation so transforms that depend on CSS variables do not resolve to invalid values (e.g., provide a fallback and/or set required CSS custom properties per element) to prevent the floating animations from being dropped by the browser.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-3"
         ],
         "quotes": [
-          "Make a screen transition of love emojis and Maroon, pink, blue  love balloon flying"
+          "No heart are flying when clicking yes"
         ]
       },
       "acceptanceCriteria": [
-        "The animation is implemented in the frontend without adding backend dependencies.",
-        "Animation-related styles are added in the existing styling system (e.g., in frontend/src/index.css and/or Tailwind utilities) without modifying any immutable frontend paths.",
-        "The overlay is rendered/controlled from the existing Valentine page flow in frontend/src/App.tsx and does not break navigation between carousel and Moments views."
+        "The love-emoji, balloon, and heart keyframe animations no longer rely on an undefined CSS variable value that can invalidate the transform property.",
+        "DevTools shows the animated elements have active animations (not crossed out) and their computed transform values are valid throughout the animation."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Update the lucide Heart icon rendering used for the flying hearts so size is controlled via SVG-appropriate properties (e.g., width/height or component props) rather than fontSize, ensuring the hearts render at the intended random sizes.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "No heart are flying when clicking yes"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The flying Heart icons in the transition overlay render at varied, visibly different sizes.",
+        "No console warnings/errors occur during the overlay animation related to invalid styles/attributes for the Heart SVG."
       ]
     }
   ],
   "constraints": [
-    "Do not change any behavior or styling outside the “Yes” click transition on the final “Will You Be My Valentine?” slide.",
-    "Backend must remain unchanged (backend/main.mo stays with no new functionality).",
-    "Do not edit any files under frontend/src/components/ui or any other immutable paths listed in SYSTEM_CONTEXT."
+    "Do not modify any files under frontend/src/components/ui (read-only UI components).",
+    "Keep the existing single-page flow: the “Yes! 💕” click triggers the overlay and then sets the final slide state to the existing accepted content."
   ],
   "nonGoals": [
-    "Adding new pages, new buttons, or changing any copy beyond what is required to support the transition.",
-    "Implementing real-time effects, audio, or backend-driven animation state."
+    "Adding sound effects or audio on the transition.",
+    "Changing the copy/text content of the carousel slides beyond what is required to fix the animation.",
+    "Adding backend canister logic; this is a frontend-only fix."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

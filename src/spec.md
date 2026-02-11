@@ -1,12 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Add a full-screen love emoji + maroon/pink/blue balloon transition animation when the user clicks the “Yes! 💕” button on the final “Will You Be My Valentine?” slide, without changing any other app behavior or visuals.
+**Goal:** Restore the missing/invalid flying hearts transition so the “Yes! 💕” click reliably shows a visible, animated overlay.
 
 **Planned changes:**
-- Add a React-controlled, full-screen overlay transition that triggers only on clicking the existing “Yes! 💕” button on the final carousel slide.
-- Implement floating love emoji elements and balloon-like elements that animate across the screen, ensuring maroon, pink, and blue balloons are all present.
-- Block user interaction with the underlying UI during the overlay while keeping the underlying layout visually unchanged, then continue to the existing accepted state (“Forever Yours! 💕” + “Moments💞” CTA) exactly as before.
-- Add any needed CSS keyframes/utility classes using the existing Tailwind/CSS approach (e.g., in the existing global styling locations), without touching immutable UI component paths or backend code.
+- Fix the “Yes! 💕” click flow on the final slide to always render the existing LoveTransitionOverlay for ~3 seconds, then return to the existing accepted-state content.
+- Correct the overlay animation CSS so any transforms using CSS variables have valid resolved values (set required per-element CSS custom properties and/or provide fallbacks) to prevent browsers from dropping the animations.
+- Update the lucide Heart SVG sizing in the flying hearts so random sizes are applied via SVG-appropriate sizing (e.g., width/height or component props) instead of `fontSize`.
 
-**User-visible outcome:** When the user clicks “Yes! 💕” on the final Valentine slide, a brief full-screen transition of floating love emojis and maroon/pink/blue balloons plays, then the app proceeds to the same accepted state as it did previously.
+**User-visible outcome:** Clicking “Yes! 💕” consistently shows a full-screen overlay with clearly visible hearts (plus the existing emojis/balloons) floating upward for about 3 seconds, and the animation works on repeated clicks without intermittently failing.

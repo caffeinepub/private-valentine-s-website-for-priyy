@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Heart } from 'lucide-react';
 
 interface LoveTransitionOverlayProps {
@@ -7,6 +7,41 @@ interface LoveTransitionOverlayProps {
 
 export function LoveTransitionOverlay({ onComplete }: LoveTransitionOverlayProps) {
   const [isVisible, setIsVisible] = useState(true);
+
+  // Generate stable random values once per mount
+  const particles = useMemo(() => {
+    const loveEmojis = ['❤️', '💕', '💖', '💗', '💓', '💝', '💞', '💘'];
+    const balloonColors = [
+      'oklch(0.45 0.15 350)', // maroon
+      'oklch(0.75 0.20 345)', // pink
+      'oklch(0.65 0.15 250)', // blue
+    ];
+
+    return {
+      emojis: Array.from({ length: 30 }, (_, i) => ({
+        emoji: loveEmojis[i % loveEmojis.length],
+        left: Math.random() * 100,
+        delay: Math.random() * 2,
+        duration: 2.5 + Math.random() * 1.5,
+        randomX: Math.random(), // 0-1 for CSS variable
+      })),
+      balloons: Array.from({ length: 20 }, (_, i) => ({
+        color: balloonColors[i % balloonColors.length],
+        left: Math.random() * 100,
+        delay: Math.random() * 1.5,
+        duration: 3 + Math.random() * 2,
+        size: 30 + Math.random() * 30,
+        randomX: Math.random(), // 0-1 for CSS variable
+      })),
+      hearts: Array.from({ length: 15 }, (_, i) => ({
+        left: Math.random() * 100,
+        delay: Math.random() * 2,
+        duration: 3 + Math.random() * 2,
+        size: 24 + Math.random() * 20,
+        randomX: Math.random(), // 0-1 for CSS variable
+      })),
+    };
+  }, []); // Empty dependency array ensures this only runs once per mount
 
   useEffect(() => {
     // Complete the transition after 3 seconds
@@ -19,30 +54,6 @@ export function LoveTransitionOverlay({ onComplete }: LoveTransitionOverlayProps
     return () => clearTimeout(timer);
   }, [onComplete]);
 
-  // Generate random positions and delays for emojis
-  const loveEmojis = ['❤️', '💕', '💖', '💗', '💓', '💝', '💞', '💘'];
-  const emojiElements = Array.from({ length: 30 }, (_, i) => ({
-    emoji: loveEmojis[i % loveEmojis.length],
-    left: Math.random() * 100,
-    delay: Math.random() * 2,
-    duration: 2.5 + Math.random() * 1.5,
-  }));
-
-  // Generate balloons with maroon, pink, and blue colors
-  const balloonColors = [
-    'oklch(0.45 0.15 350)', // maroon
-    'oklch(0.75 0.20 345)', // pink
-    'oklch(0.65 0.15 250)', // blue
-  ];
-  
-  const balloonElements = Array.from({ length: 20 }, (_, i) => ({
-    color: balloonColors[i % balloonColors.length],
-    left: Math.random() * 100,
-    delay: Math.random() * 1.5,
-    duration: 3 + Math.random() * 2,
-    size: 30 + Math.random() * 30,
-  }));
-
   return (
     <div
       className={`fixed inset-0 z-50 pointer-events-auto transition-opacity duration-500 ${
@@ -54,7 +65,7 @@ export function LoveTransitionOverlay({ onComplete }: LoveTransitionOverlayProps
       }}
     >
       {/* Love emojis floating up */}
-      {emojiElements.map((item, index) => (
+      {particles.emojis.map((item, index) => (
         <div
           key={`emoji-${index}`}
           className="absolute animate-love-emoji-float"
@@ -64,6 +75,8 @@ export function LoveTransitionOverlay({ onComplete }: LoveTransitionOverlayProps
             animationDelay: `${item.delay}s`,
             animationDuration: `${item.duration}s`,
             fontSize: '2rem',
+            // @ts-ignore - CSS custom property
+            '--random': item.randomX,
           }}
         >
           {item.emoji}
@@ -71,7 +84,7 @@ export function LoveTransitionOverlay({ onComplete }: LoveTransitionOverlayProps
       ))}
 
       {/* Balloons floating up */}
-      {balloonElements.map((balloon, index) => (
+      {particles.balloons.map((balloon, index) => (
         <div
           key={`balloon-${index}`}
           className="absolute animate-balloon-float"
@@ -80,6 +93,8 @@ export function LoveTransitionOverlay({ onComplete }: LoveTransitionOverlayProps
             bottom: '-100px',
             animationDelay: `${balloon.delay}s`,
             animationDuration: `${balloon.duration}s`,
+            // @ts-ignore - CSS custom property
+            '--random': balloon.randomX,
           }}
         >
           <div
@@ -126,16 +141,18 @@ export function LoveTransitionOverlay({ onComplete }: LoveTransitionOverlayProps
       ))}
 
       {/* Floating hearts (lucide icons) */}
-      {Array.from({ length: 15 }, (_, i) => (
+      {particles.hearts.map((heart, i) => (
         <Heart
           key={`heart-${i}`}
+          size={heart.size}
           className="absolute text-romantic-accent fill-romantic-accent animate-love-heart-float opacity-60"
           style={{
-            left: `${Math.random() * 100}%`,
+            left: `${heart.left}%`,
             bottom: '-50px',
-            animationDelay: `${Math.random() * 2}s`,
-            animationDuration: `${3 + Math.random() * 2}s`,
-            fontSize: `${24 + Math.random() * 20}px`,
+            animationDelay: `${heart.delay}s`,
+            animationDuration: `${heart.duration}s`,
+            // @ts-ignore - CSS custom property
+            '--random': heart.randomX,
           }}
         />
       ))}

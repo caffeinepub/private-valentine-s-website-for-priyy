@@ -1,49 +1,61 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Love emoji + balloon full-screen transition on final Yes click",
+  "title": "Restore reliable flying-hearts LoveTransitionOverlay animation on Yes click",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Trigger a full-screen love emoji + maroon/pink/blue balloon transition overlay when clicking the final slide “Yes! 💕”, blocking interaction until it finishes, then continue to the existing accepted state unchanged.",
+      "summary": "Make the “Yes! 💕” click reliably show the LoveTransitionOverlay with visible animated hearts/emojis/balloons for ~3 seconds, then return to the accepted content, consistently across repeated runs.",
       "acceptanceCriteria": [
-        "On the final carousel slide, clicking the “Yes! 💕” button triggers a full-screen overlay animation (screen transition) that includes visible love emojis and balloon-like elements.",
-        "The balloon elements use maroon, pink, and blue colors (all three colors must be present in the animation).",
-        "During the transition overlay, the underlying UI remains visually unchanged (no layout shifts), and user interaction with underlying elements is blocked until the animation completes.",
-        "After the transition finishes, the app proceeds exactly as it did before the change (i.e., it shows the existing “Forever Yours! 💕” accepted state and the existing “Moments💞” CTA, with no other behavior changes).",
-        "No other screens (including the Moments page) change their visuals or behavior as a result of this feature."
+        "On the final slide, clicking “Yes! 💕” renders the LoveTransitionOverlay for ~3 seconds and then returns to the accepted state content.",
+        "During the overlay, heart elements are clearly visible (not zero-size) and animate upward (not static).",
+        "The overlay animation works consistently across multiple consecutive clicks on “Yes! 💕” (no intermittent failures due to randomization/state)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/LoveTransitionOverlay.tsx",
-          "operation": "create",
-          "description": "Create a reusable full-screen React overlay component that renders animated floating love emojis plus balloon-like elements in maroon, pink, and blue; ensure the overlay captures pointer events to block underlying interactions and can signal completion after a fixed animation duration."
-        },
-        {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Update the existing final-slide “Yes! 💕” click flow to (1) show the LoveTransitionOverlay full-screen transition, (2) prevent additional underlying interactions while it is visible, and (3) only set the existing yes-accepted state after the overlay completes so the app continues exactly as before."
+          "description": "Ensure the overlay can be re-triggered deterministically by introducing a transition run id/counter and rendering LoveTransitionOverlay with a unique React key per run, while keeping the existing single-page flow (overlay then accepted state)."
+        },
+        {
+          "path": "frontend/src/components/LoveTransitionOverlay.tsx",
+          "operation": "modify",
+          "description": "Stabilize overlay particle generation for the duration of a run (e.g., generate random positions/sizes once per mount/run id rather than on every render) so the 3-second animation is consistent and doesn’t intermittently fail."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Implement the transition using Tailwind + the existing CSS animation approach, wiring the overlay into the current App flow without affecting carousel/Moments navigation.",
+      "summary": "Prevent invalid CSS transforms caused by undefined CSS variables so the browser does not drop the floating animations.",
       "acceptanceCriteria": [
-        "The animation is implemented in the frontend without adding backend dependencies.",
-        "Animation-related styles are added in the existing styling system (e.g., in frontend/src/index.css and/or Tailwind utilities) without modifying any immutable frontend paths.",
-        "The overlay is rendered/controlled from the existing Valentine page flow in frontend/src/App.tsx and does not break navigation between carousel and Moments views."
+        "The love-emoji, balloon, and heart keyframe animations no longer rely on an undefined CSS variable value that can invalidate the transform property.",
+        "DevTools shows the animated elements have active animations (not crossed out) and their computed transform values are valid throughout the animation."
       ],
       "file_operations": [
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Add new keyframes and utility classes for the transition (e.g., love-emoji float/drift + balloon fly across screen) following the existing custom-animation pattern used by animate-float-heart."
+          "description": "Update the love-emoji-float, balloon-float, and love-heart-float keyframes to use safe CSS variable fallbacks (e.g., var(--random, <fallback>)) anywhere var(--random) is referenced so computed transforms remain valid even if a custom property is missing."
         },
         {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/src/components/LoveTransitionOverlay.tsx",
           "operation": "modify",
-          "description": "Wire the overlay rendering into the existing component tree (fixed, top-most layer) and ensure the transition state is scoped only to the final-slide Yes click path, leaving Moments and all other UI/behavior unchanged."
+          "description": "Set required CSS custom properties per animated element (e.g., assign a per-element --random value via inline style) so translateX calc() expressions resolve to valid transforms and animations are not dropped."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Render flying lucide Heart icons at intended random sizes using SVG-appropriate sizing (width/height or component props) instead of fontSize.",
+      "acceptanceCriteria": [
+        "The flying Heart icons in the transition overlay render at varied, visibly different sizes.",
+        "No console warnings/errors occur during the overlay animation related to invalid styles/attributes for the Heart SVG."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/LoveTransitionOverlay.tsx",
+          "operation": "modify",
+          "description": "Replace Heart icon sizing that currently uses fontSize with SVG-appropriate sizing (e.g., Heart 'size' prop or explicit width/height), preserving random size variation for each heart and avoiding invalid SVG style usage."
         }
       ]
     }

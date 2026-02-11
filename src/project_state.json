@@ -1,38 +1,40 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Valentine-themed app; add an animated transition when the user clicks Yes on the \"Will you be my valentine?\" page.",
+  "summary": "New project",
   "architectural_notes": [],
-  "known_issues": [],
-  "isFixRequest": false,
+  "known_issues": [
+    "Hearts are not flying/animating when the user clicks “Yes” (expected heart-flying effect missing)."
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
-      "id": "feature-keep-the-app-behavior-and-ui-the-same-except-when-the-user-clicks-the-existing-yes-button-on-the-final-slide-will-you-be-my-valentine-play-a-full-screen-transition-animation-featuring-floating-love-emojis-and-maroon-pink-blue-love-balloons-flying-across-the-screen",
-      "title": "Keep the app behavior and UI the same, except: when the user clicks the existing “Yes! 💕” button on the final slide (“Will You Be My Valentine?”), play a full-screen transition animation featuring floating love emojis and maroon/pink/blue love balloons flying across the screen.",
+      "id": "feature-ensure-that-clicking-the-existing-yes-button-on-the-final-slide-reliably-shows-the-full-screen-transition-overlay-with-visible-animated-floating-hearts-and-the-existing-emojis-balloons-moving-upward-across-the-screen",
+      "title": "Ensure that clicking the existing “Yes! 💕” button on the final slide reliably shows the full-screen transition overlay with visible, animated floating hearts (and the existing emojis/balloons) moving upward across the screen.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-implement-the-transition-animation-using-project-styling-conventions-tailwind-existing-css-animation-approach-by-adding-any-required-new-keyframes-utility-classes-and-rendering-a-react-overlay-within-the-existing-app-component-flow",
-      "title": "Implement the transition animation using project styling conventions (Tailwind + existing CSS animation approach) by adding any required new keyframes/utility classes and rendering a React overlay within the existing App component flow.",
+      "id": "feature-fix-the-transition-animation-implementation-so-transforms-that-depend-on-css-variables-do-not-resolve-to-invalid-values-e-g-provide-a-fallback-and-or-set-required-css-custom-properties-per-element-to-prevent-the-floating-animations-from-being-dropped-by-the-browser",
+      "title": "Fix the transition animation implementation so transforms that depend on CSS variables do not resolve to invalid values (e.g., provide a fallback and/or set required CSS custom properties per element) to prevent the floating animations from being dropped by the browser.",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
-    }
-  ],
-  "new_feature_requests": [
+    },
     {
-      "id": "AR-1",
-      "summary": "On \"Will you be my valentine?\" page, when Yes is clicked, show a screen transition animation with love emojis and maroon/pink/blue love balloons flying.",
-      "reqIds": [],
-      "status": "pending"
+      "id": "feature-update-the-lucide-heart-icon-rendering-used-for-the-flying-hearts-so-size-is-controlled-via-svg-appropriate-properties-e-g-width-height-or-component-props-rather-than-fontsize-ensuring-the-hearts-render-at-the-intended-random-sizes",
+      "title": "Update the lucide Heart icon rendering used for the flying hearts so size is controlled via SVG-appropriate properties (e.g., width/height or component props) rather than fontSize, ensuring the hearts render at the intended random sizes.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
     }
   ],
-  "gameProjectType": "none",
-  "projectName": "Add love emoji + balloon screen transition on Yes click",
+  "new_feature_requests": [],
+  "projectName": "Fix missing flying hearts animation when clicking “Yes”",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

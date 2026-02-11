@@ -10,6 +10,7 @@ function App() {
   const [finalSlideState, setFinalSlideState] = useState<'question' | 'no-rejected' | 'yes-accepted'>('question');
   const [currentView, setCurrentView] = useState<'carousel' | 'moments'>('carousel');
   const [showTransition, setShowTransition] = useState(false);
+  const [transitionKey, setTransitionKey] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowContent(true), 500);
@@ -52,7 +53,8 @@ function App() {
   };
 
   const handleYesClick = () => {
-    // Show the transition overlay
+    // Increment transition key to force remount with new random values
+    setTransitionKey(prev => prev + 1);
     setShowTransition(true);
   };
 
@@ -121,11 +123,11 @@ function App() {
           <Heart
             key={i}
             className="absolute text-romantic-accent animate-float-heart opacity-20"
+            size={20 + Math.random() * 20}
             style={{
               left: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 5}s`,
               animationDuration: `${8 + Math.random() * 4}s`,
-              fontSize: `${20 + Math.random() * 20}px`,
             }}
           />
         ))}
@@ -306,7 +308,7 @@ function App() {
       </footer>
 
       {/* Love Transition Overlay */}
-      {showTransition && <LoveTransitionOverlay onComplete={handleTransitionComplete} />}
+      {showTransition && <LoveTransitionOverlay key={transitionKey} onComplete={handleTransitionComplete} />}
     </div>
   );
 }

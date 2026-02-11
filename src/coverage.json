@@ -1,46 +1,56 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T14:34:59.592Z",
+  "generatedAt": "2026-02-10T14:41:21.238Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 2,
-    "implemented": 2,
+    "total": 3,
+    "implemented": 3,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Keep the app behavior and UI the same, except: when the user clicks the existing “Yes! 💕” button on the final slide (“Will You Be My Valentine?”), play a full-screen transition animation featuring floating love emojis and maroon/pink/blue love balloons flying across the screen.",
+        "summary": "Ensure that clicking the existing “Yes! 💕” button on the final slide reliably shows the full-screen transition overlay with visible, animated floating hearts (and the existing emojis/balloons) moving upward across the screen.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/LoveTransitionOverlay.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/App.tsx",
+          "frontend/src/components/LoveTransitionOverlay.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/LoveTransitionOverlay.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/App.tsx",
+          "frontend/src/components/LoveTransitionOverlay.tsx"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Implement the transition animation using project styling conventions (Tailwind + existing CSS animation approach) by adding any required new keyframes/utility classes and rendering a React overlay within the existing App component flow.",
+        "summary": "Fix the transition animation implementation so transforms that depend on CSS variables do not resolve to invalid values (e.g., provide a fallback and/or set required CSS custom properties per element) to prevent the floating animations from being dropped by the browser.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/index.css",
-          "frontend/src/App.tsx"
+          "frontend/src/components/LoveTransitionOverlay.tsx"
         ],
         "matchedFiles": [
           "frontend/src/index.css",
-          "frontend/src/App.tsx"
+          "frontend/src/components/LoveTransitionOverlay.tsx"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Update the lucide Heart icon rendering used for the flying hearts so size is controlled via SVG-appropriate properties (e.g., width/height or component props) rather than fontSize, ensuring the hearts render at the intended random sizes.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/LoveTransitionOverlay.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/LoveTransitionOverlay.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
     "build-request.json",
-    "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
