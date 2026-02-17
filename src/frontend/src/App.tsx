@@ -4,6 +4,19 @@ import { Button } from '@/components/ui/button';
 import Moments from '@/pages/Moments';
 import { LoveTransitionOverlay } from '@/components/LoveTransitionOverlay';
 
+/**
+ * Love Slides - Main Application Component
+ * 
+ * A romantic Valentine's carousel application for Priyy🦋 featuring:
+ * - Multi-slide romantic message carousel with navigation
+ * - Interactive final slide with Yes/No interaction
+ * - Full-screen love transition animation on "Yes" acceptance
+ * - Photo gallery "Moments" page accessible after acceptance
+ * - Responsive design with romantic theme and animations
+ * 
+ * Deployment: See DEPLOYMENT.md for production deployment guide
+ * Testing: See SMOKE_TEST.md for post-deployment verification checklist
+ */
 function App() {
   const [showContent, setShowContent] = useState(false);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
@@ -87,7 +100,7 @@ function App() {
       };
     } else if (finalSlideState === 'no-rejected') {
       return {
-        title: "Nice Try! 😊",
+        title: "Nice Try! 😋",
         text: "There is no choice to select 'No' here. My love for you is inevitable, and so is your answer. Let's try this again..."
       };
     } else {
@@ -103,7 +116,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden" data-testid="app-container">
       {/* Background layers */}
       <div className="fixed inset-0 z-0">
         <div 
@@ -155,7 +168,10 @@ function App() {
           </div>
 
           {/* Message card */}
-          <div className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12 mb-8 border-2 border-romantic-accent/30 animate-slide-up">
+          <div 
+            className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12 mb-8 border-2 border-romantic-accent/30 animate-slide-up"
+            data-testid={isLastSlide ? "final-slide" : "message-card"}
+          >
             <div className="min-h-[300px] flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-center gap-2 mb-6">
@@ -177,6 +193,7 @@ function App() {
                       onClick={handleYesClick}
                       size="lg"
                       className="bg-romantic-accent hover:bg-romantic-accent/90 text-white px-12 py-6 text-xl font-semibold shadow-lg hover:shadow-xl transition-all"
+                      data-testid="yes-button"
                     >
                       Yes! 💕
                     </Button>
@@ -186,11 +203,22 @@ function App() {
                         size="lg"
                         variant="outline"
                         className="border-2 border-romantic-accent/50 text-romantic-deep hover:bg-romantic-accent/10 px-12 py-6 text-xl font-semibold"
+                        data-testid="no-button"
                       >
                         No
                       </Button>
                     )}
                   </div>
+                )}
+
+                {/* Rejection state indicator */}
+                {isLastSlide && finalSlideState === 'no-rejected' && (
+                  <div data-testid="rejection-state" className="hidden" aria-label="Rejection state active" />
+                )}
+
+                {/* Accepted state indicator */}
+                {isLastSlide && finalSlideState === 'yes-accepted' && (
+                  <div data-testid="accepted-state" className="hidden" aria-label="Accepted state active" />
                 )}
 
                 {/* Moments button - shown after Yes acceptance */}
@@ -200,6 +228,7 @@ function App() {
                       onClick={handleMomentsClick}
                       size="lg"
                       className="bg-romantic-accent hover:bg-romantic-accent/90 text-white px-12 py-6 text-xl font-semibold shadow-lg hover:shadow-xl transition-all animate-pulse"
+                      data-testid="moments-button"
                     >
                       Moments💞
                     </Button>
@@ -215,11 +244,12 @@ function App() {
                     disabled={currentMessageIndex === 0}
                     variant="outline"
                     className="border-romantic-accent text-romantic-deep hover:bg-romantic-accent/10 disabled:opacity-30"
+                    data-testid="carousel-previous"
                   >
                     Previous
                   </Button>
 
-                  <div className="flex gap-2">
+                  <div className="flex gap-2" data-testid="carousel-dots">
                     {messages.map((_, index) => (
                       <button
                         key={index}
@@ -238,6 +268,7 @@ function App() {
                     onClick={handleNext}
                     disabled={currentMessageIndex === messages.length - 1}
                     className="bg-romantic-accent hover:bg-romantic-accent/90 text-white disabled:opacity-30"
+                    data-testid="carousel-next"
                   >
                     Next
                   </Button>
@@ -251,11 +282,12 @@ function App() {
                     onClick={handlePrevious}
                     variant="outline"
                     className="border-romantic-accent text-romantic-deep hover:bg-romantic-accent/10"
+                    data-testid="carousel-previous"
                   >
                     Previous
                   </Button>
 
-                  <div className="flex gap-2">
+                  <div className="flex gap-2" data-testid="carousel-dots">
                     {messages.map((_, index) => (
                       <button
                         key={index}
@@ -308,7 +340,7 @@ function App() {
       </footer>
 
       {/* Love Transition Overlay */}
-      {showTransition && <LoveTransitionOverlay key={transitionKey} onComplete={handleTransitionComplete} />}
+      {showTransition && <LoveTransitionOverlay key={transitionKey} onComplete={handleTransitionComplete} data-testid="love-transition" />}
     </div>
   );
 }

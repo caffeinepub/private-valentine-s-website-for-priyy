@@ -5,9 +5,15 @@ interface MomentsProps {
   onBack: () => void;
 }
 
+/**
+ * Moments Page - Photo Gallery Component
+ * 
+ * Displays a romantic photo gallery with two uploaded photos and a lovely message.
+ * Includes navigation back to the main carousel and maintains the romantic theme.
+ */
 function Moments({ onBack }: MomentsProps) {
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden" data-testid="moments-page">
       {/* Background layers */}
       <div className="fixed inset-0 z-0">
         <div 
@@ -46,6 +52,7 @@ function Moments({ onBack }: MomentsProps) {
               onClick={onBack}
               variant="outline"
               className="border-romantic-accent text-romantic-deep hover:bg-romantic-accent/10"
+              data-testid="back-button"
             >
               <ArrowLeft className="mr-2" size={20} />
               Back
@@ -85,7 +92,7 @@ function Moments({ onBack }: MomentsProps) {
           </div>
 
           {/* Photo gallery */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12" data-testid="moments-gallery">
             {/* Photo 1 */}
             <div className="group relative animate-slide-up" style={{ animationDelay: '0.2s' }}>
               <div className="absolute -inset-1 bg-gradient-to-r from-romantic-accent via-romantic-gold to-romantic-accent rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-500"></div>
@@ -106,7 +113,7 @@ function Moments({ onBack }: MomentsProps) {
 
             {/* Photo 2 */}
             <div className="group relative animate-slide-up" style={{ animationDelay: '0.4s' }}>
-              <div className="absolute -inset-1 bg-gradient-to-r from-romantic-accent via-romantic-gold to-romantic-accent rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-500"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-romantic-gold via-romantic-accent to-romantic-gold rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-500"></div>
               <div className="relative bg-white/95 backdrop-blur-sm rounded-3xl p-4 shadow-xl border-2 border-romantic-accent/20 overflow-hidden">
                 <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
                   <img
@@ -117,17 +124,10 @@ function Moments({ onBack }: MomentsProps) {
                   <div className="absolute inset-0 bg-gradient-to-t from-romantic-deep/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
                 <div className="mt-4 text-center">
-                  <p className="text-romantic-deep font-serif text-lg">Together forever 💞</p>
+                  <p className="text-romantic-deep font-serif text-lg">Forever cherished 💖</p>
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Decorative hearts */}
-          <div className="flex justify-center gap-4 mb-8 animate-bounce-slow">
-            <Heart className="text-romantic-accent fill-romantic-accent" size={32} />
-            <Heart className="text-romantic-gold fill-romantic-gold" size={40} />
-            <Heart className="text-romantic-accent fill-romantic-accent" size={32} />
           </div>
 
           {/* Butterfly accent */}
@@ -144,9 +144,9 @@ function Moments({ onBack }: MomentsProps) {
       {/* Footer */}
       <footer className="relative z-20 py-6 text-center">
         <p className="text-romantic-text/80 text-sm flex items-center justify-center gap-2">
-          © 2026. Built with <Heart className="text-romantic-accent fill-romantic-accent inline w-4 h-4 animate-heartbeat" /> using{' '}
+          © {new Date().getFullYear()}. Built with <Heart className="text-romantic-accent fill-romantic-accent inline w-4 h-4 animate-heartbeat" /> using{' '}
           <a
-            href="https://caffeine.ai"
+            href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-romantic-deep hover:text-romantic-accent transition-colors underline"

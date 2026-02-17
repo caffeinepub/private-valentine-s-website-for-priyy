@@ -1,11 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Restore the missing/invalid flying hearts transition so the “Yes! 💕” click reliably shows a visible, animated overlay.
+**Goal:** Deploy the current Love Slides build to production so it is live and accessible to end users.
 
 **Planned changes:**
-- Fix the “Yes! 💕” click flow on the final slide to always render the existing LoveTransitionOverlay for ~3 seconds, then return to the existing accepted-state content.
-- Correct the overlay animation CSS so any transforms using CSS variables have valid resolved values (set required per-element CSS custom properties and/or provide fallbacks) to prevent browsers from dropping the animations.
-- Update the lucide Heart SVG sizing in the flying hearts so random sizes are applied via SVG-appropriate sizing (e.g., width/height or component props) instead of `fontSize`.
+- Create a production/live Internet Computer deployment from the current codebase.
+- Provide the live production URL (or equivalent identifier) for the deployment.
+- Run a basic post-deployment smoke test on the live site to confirm key UI flows work (carousel navigation, Yes/No final slide behaviors, and Moments page navigation).
 
-**User-visible outcome:** Clicking “Yes! 💕” consistently shows a full-screen overlay with clearly visible hearts (plus the existing emojis/balloons) floating upward for about 3 seconds, and the animation works on repeated clicks without intermittently failing.
+**User-visible outcome:** Users can visit the live URL and use the app successfully, including navigating slides and completing the final Yes/No flow through to the Moments page.

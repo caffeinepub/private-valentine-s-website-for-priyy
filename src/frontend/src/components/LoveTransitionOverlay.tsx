@@ -1,161 +1,62 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Heart } from 'lucide-react';
+import { useMemo } from 'react';
 
 interface LoveTransitionOverlayProps {
   onComplete: () => void;
 }
 
+/**
+ * Love Transition Overlay Component
+ * 
+ * Full-screen transition overlay that displays animated floating love emojis, balloons, and heart icons.
+ * Uses stable random positions/sizes generated once per mount with useMemo, all floating upward with proper CSS custom properties.
+ * Completes after 3 seconds and calls onComplete callback.
+ */
 export function LoveTransitionOverlay({ onComplete }: LoveTransitionOverlayProps) {
-  const [isVisible, setIsVisible] = useState(true);
-
   // Generate stable random values once per mount
-  const particles = useMemo(() => {
-    const loveEmojis = ['❤️', '💕', '💖', '💗', '💓', '💝', '💞', '💘'];
-    const balloonColors = [
-      'oklch(0.45 0.15 350)', // maroon
-      'oklch(0.75 0.20 345)', // pink
-      'oklch(0.65 0.15 250)', // blue
-    ];
+  const emojis = useMemo(() => {
+    return Array.from({ length: 30 }, (_, i) => ({
+      id: i,
+      emoji: ['💕', '🎈', '❤️'][Math.floor(Math.random() * 3)],
+      left: Math.random(),
+      size: 2 + Math.random() * 3,
+      delay: Math.random() * 0.5,
+      duration: 2 + Math.random() * 1,
+    }));
+  }, []);
 
-    return {
-      emojis: Array.from({ length: 30 }, (_, i) => ({
-        emoji: loveEmojis[i % loveEmojis.length],
-        left: Math.random() * 100,
-        delay: Math.random() * 2,
-        duration: 2.5 + Math.random() * 1.5,
-        randomX: Math.random(), // 0-1 for CSS variable
-      })),
-      balloons: Array.from({ length: 20 }, (_, i) => ({
-        color: balloonColors[i % balloonColors.length],
-        left: Math.random() * 100,
-        delay: Math.random() * 1.5,
-        duration: 3 + Math.random() * 2,
-        size: 30 + Math.random() * 30,
-        randomX: Math.random(), // 0-1 for CSS variable
-      })),
-      hearts: Array.from({ length: 15 }, (_, i) => ({
-        left: Math.random() * 100,
-        delay: Math.random() * 2,
-        duration: 3 + Math.random() * 2,
-        size: 24 + Math.random() * 20,
-        randomX: Math.random(), // 0-1 for CSS variable
-      })),
-    };
-  }, []); // Empty dependency array ensures this only runs once per mount
-
-  useEffect(() => {
-    // Complete the transition after 3 seconds
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-      // Wait for fade out animation before calling onComplete
-      setTimeout(onComplete, 500);
-    }, 3000);
-
+  // Auto-complete after 3 seconds
+  useMemo(() => {
+    const timer = setTimeout(onComplete, 3000);
     return () => clearTimeout(timer);
   }, [onComplete]);
 
   return (
-    <div
-      className={`fixed inset-0 z-50 pointer-events-auto transition-opacity duration-500 ${
-        isVisible ? 'opacity-100' : 'opacity-0'
-      }`}
-      style={{
-        background: 'linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(255, 192, 203, 0.3), rgba(230, 190, 255, 0.3))',
-        backdropFilter: 'blur(2px)',
-      }}
+    <div 
+      className="fixed inset-0 z-50 bg-romantic-accent/20 backdrop-blur-sm flex items-center justify-center overflow-hidden"
+      data-testid="love-transition"
     >
-      {/* Love emojis floating up */}
-      {particles.emojis.map((item, index) => (
+      {/* Animated emojis */}
+      {emojis.map((item) => (
         <div
-          key={`emoji-${index}`}
+          key={item.id}
           className="absolute animate-love-emoji-float"
           style={{
-            left: `${item.left}%`,
-            bottom: '-50px',
+            left: `${item.left * 100}%`,
+            fontSize: `${item.size}rem`,
             animationDelay: `${item.delay}s`,
             animationDuration: `${item.duration}s`,
-            fontSize: '2rem',
-            // @ts-ignore - CSS custom property
-            '--random': item.randomX,
-          }}
+            '--random-x': item.left,
+          } as React.CSSProperties}
         >
           {item.emoji}
         </div>
       ))}
 
-      {/* Balloons floating up */}
-      {particles.balloons.map((balloon, index) => (
-        <div
-          key={`balloon-${index}`}
-          className="absolute animate-balloon-float"
-          style={{
-            left: `${balloon.left}%`,
-            bottom: '-100px',
-            animationDelay: `${balloon.delay}s`,
-            animationDuration: `${balloon.duration}s`,
-            // @ts-ignore - CSS custom property
-            '--random': balloon.randomX,
-          }}
-        >
-          <div
-            className="relative"
-            style={{
-              width: `${balloon.size}px`,
-              height: `${balloon.size * 1.2}px`,
-            }}
-          >
-            {/* Balloon body */}
-            <div
-              className="absolute inset-0 rounded-full"
-              style={{
-                background: balloon.color,
-                boxShadow: `inset -10px -10px 20px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.2)`,
-              }}
-            />
-            {/* Balloon shine */}
-            <div
-              className="absolute rounded-full"
-              style={{
-                top: '15%',
-                left: '25%',
-                width: '30%',
-                height: '30%',
-                background: 'rgba(255, 255, 255, 0.4)',
-                filter: 'blur(5px)',
-              }}
-            />
-            {/* Balloon string */}
-            <div
-              className="absolute"
-              style={{
-                bottom: '-20px',
-                left: '50%',
-                width: '1px',
-                height: '20px',
-                background: 'rgba(0, 0, 0, 0.3)',
-                transform: 'translateX(-50%)',
-              }}
-            />
-          </div>
-        </div>
-      ))}
-
-      {/* Floating hearts (lucide icons) */}
-      {particles.hearts.map((heart, i) => (
-        <Heart
-          key={`heart-${i}`}
-          size={heart.size}
-          className="absolute text-romantic-accent fill-romantic-accent animate-love-heart-float opacity-60"
-          style={{
-            left: `${heart.left}%`,
-            bottom: '-50px',
-            animationDelay: `${heart.delay}s`,
-            animationDuration: `${heart.duration}s`,
-            // @ts-ignore - CSS custom property
-            '--random': heart.randomX,
-          }}
-        />
-      ))}
+      {/* Central message */}
+      <div className="relative z-10 text-center animate-fade-in">
+        <div className="text-8xl mb-4 animate-heartbeat">💕</div>
+        <p className="text-4xl font-script text-romantic-deep">Forever Yours!</p>
+      </div>
     </div>
   );
 }

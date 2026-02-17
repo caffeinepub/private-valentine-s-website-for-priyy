@@ -2,11 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-ensure-that-clicking-the-existing-yes-button-on-the-final-slide-reliably-shows-the-full-screen-transition-overlay-with-visible-animated-floating-hearts-and-the-existing-emojis-balloons-moving-upward-across-the-screen",
-      "featureTitle": "Ensure that clicking the existing “Yes! 💕” button on the final slide reliably shows the full-screen transition overlay with visible, animated floating hearts (and the existing emojis/balloons) moving upward across the screen.",
+      "featureId": "feature-publish-the-current-draft-build-to-the-live-production-internet-computer-deployment-so-the-app-is-accessible-to-end-users",
+      "featureTitle": "Publish the current draft build to the live (production) Internet Computer deployment so the app is accessible to end users.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/LoveTransitionOverlay.tsx"
+        "frontend/DEPLOYMENT.md"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -21,11 +20,11 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-fix-the-transition-animation-implementation-so-transforms-that-depend-on-css-variables-do-not-resolve-to-invalid-values-e-g-provide-a-fallback-and-or-set-required-css-custom-properties-per-element-to-prevent-the-floating-animations-from-being-dropped-by-the-browser",
-      "featureTitle": "Fix the transition animation implementation so transforms that depend on CSS variables do not resolve to invalid values (e.g., provide a fallback and/or set required CSS custom properties per element) to prevent the floating animations from being dropped by the browser.",
+      "featureId": "feature-run-a-basic-post-deployment-smoke-test-on-the-live-deployment-to-confirm-key-ui-flows-render-correctly",
+      "featureTitle": "Run a basic post-deployment smoke test on the live deployment to confirm key UI flows render correctly.",
       "files": [
-        "frontend/src/components/LoveTransitionOverlay.tsx",
-        "frontend/src/index.css"
+        "frontend/SMOKE_TEST.md",
+        "frontend/src/App.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -36,24 +35,6 @@
       ],
       "testIds": [
         "REQ-2"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-the-lucide-heart-icon-rendering-used-for-the-flying-hearts-so-size-is-controlled-via-svg-appropriate-properties-e-g-width-height-or-component-props-rather-than-fontsize-ensuring-the-hearts-render-at-the-intended-random-sizes",
-      "featureTitle": "Update the lucide Heart icon rendering used for the flying hearts so size is controlled via SVG-appropriate properties (e.g., width/height or component props) rather than fontSize, ensuring the hearts render at the intended random sizes.",
-      "files": [
-        "frontend/src/components/LoveTransitionOverlay.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-3"
       ],
       "confidence": "high"
     }

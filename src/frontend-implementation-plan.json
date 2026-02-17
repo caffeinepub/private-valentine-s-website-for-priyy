@@ -1,61 +1,47 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Restore reliable flying-hearts LoveTransitionOverlay animation on Yes click",
+  "title": "Love Slides — Production deployment + post-deploy smoke test (frontend)",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Make the “Yes! 💕” click reliably show the LoveTransitionOverlay with visible animated hearts/emojis/balloons for ~3 seconds, then return to the accepted content, consistently across repeated runs.",
+      "summary": "Add frontend-side deployment guidance to publish the current build to a live Internet Computer deployment and capture the live URL.",
       "acceptanceCriteria": [
-        "On the final slide, clicking “Yes! 💕” renders the LoveTransitionOverlay for ~3 seconds and then returns to the accepted state content.",
-        "During the overlay, heart elements are clearly visible (not zero-size) and animate upward (not static).",
-        "The overlay animation works consistently across multiple consecutive clicks on “Yes! 💕” (no intermittent failures due to randomization/state)."
+        "A production/live deployment is created from the current codebase.",
+        "The platform returns a live URL (or equivalent identifier) for the production deployment.",
+        "Visiting the live URL loads the app successfully without runtime errors."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Ensure the overlay can be re-triggered deterministically by introducing a transition run id/counter and rendering LoveTransitionOverlay with a unique React key per run, while keeping the existing single-page flow (overlay then accepted state)."
+          "path": "frontend/DEPLOYMENT.md",
+          "operation": "create",
+          "description": "Create a deployment runbook for making the app live on the Internet Computer, including build/export steps and where to retrieve/store the live URL. Use the selected github-export-icp-cli component as the reference for ICP CLI/Docker/dfx deployment workflow. Verify the component's usage instructions before implementing."
         },
         {
-          "path": "frontend/src/components/LoveTransitionOverlay.tsx",
+          "path": "frontend/index.html",
           "operation": "modify",
-          "description": "Stabilize overlay particle generation for the duration of a run (e.g., generate random positions/sizes once per mount/run id rather than on every render) so the 3-second animation is consistent and doesn’t intermittently fail."
+          "description": "Update metadata documentation comments (non-functional) to reference the production deployment runbook and the expected live URL location, without changing runtime behavior."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Prevent invalid CSS transforms caused by undefined CSS variables so the browser does not drop the floating animations.",
+      "summary": "Add a basic post-deployment smoke test checklist for validating key UI flows on the live deployment.",
       "acceptanceCriteria": [
-        "The love-emoji, balloon, and heart keyframe animations no longer rely on an undefined CSS variable value that can invalidate the transform property.",
-        "DevTools shows the animated elements have active animations (not crossed out) and their computed transform values are valid throughout the animation."
+        "The carousel view loads and navigation (Next/Previous) works.",
+        "On the final slide, clicking \"No\" shows the rejection title \"Nice Try! 😋\".",
+        "Clicking \"Yes! 💕\" shows the transition overlay and then the accepted state, and the \"Moments💞\" button navigates to the Moments page."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Update the love-emoji-float, balloon-float, and love-heart-float keyframes to use safe CSS variable fallbacks (e.g., var(--random, <fallback>)) anywhere var(--random) is referenced so computed transforms remain valid even if a custom property is missing."
+          "path": "frontend/SMOKE_TEST.md",
+          "operation": "create",
+          "description": "Create a manual smoke test checklist to be run against the production/live URL that verifies: carousel loads; Next/Previous works; final slide 'No' renders title 'Nice Try! 😋'; 'Yes! 💕' shows LoveTransitionOverlay then accepted state; 'Moments💞' navigates to the Moments view. Reference the existing App carousel/Moments flow and shadcn-ui Button interactions at a high level. Verify the component's usage instructions before implementing."
         },
         {
-          "path": "frontend/src/components/LoveTransitionOverlay.tsx",
+          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Set required CSS custom properties per animated element (e.g., assign a per-element --random value via inline style) so translateX calc() expressions resolve to valid transforms and animations are not dropped."
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "Render flying lucide Heart icons at intended random sizes using SVG-appropriate sizing (width/height or component props) instead of fontSize.",
-      "acceptanceCriteria": [
-        "The flying Heart icons in the transition overlay render at varied, visibly different sizes.",
-        "No console warnings/errors occur during the overlay animation related to invalid styles/attributes for the Heart SVG."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/LoveTransitionOverlay.tsx",
-          "operation": "modify",
-          "description": "Replace Heart icon sizing that currently uses fontSize with SVG-appropriate sizing (e.g., Heart 'size' prop or explicit width/height), preserving random size variation for each heart and avoiding invalid SVG style usage."
+          "description": "Add minimal, non-visual testability hooks/documentation (e.g., stable data attributes and/or inline comments) to make the smoke test steps unambiguous without changing UI/UX or behavior. Verify the component's usage instructions before implementing."
         }
       ]
     }

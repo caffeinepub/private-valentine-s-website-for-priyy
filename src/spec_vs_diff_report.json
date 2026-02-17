@@ -1,43 +1,55 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T14:41:21.236Z",
-  "summary": "Diff implements a remountable LoveTransitionOverlay with stable per-mount randomization and adds CSS variable fallbacks for animation transforms. However, the diff also introduces unrelated UI/theme/gallery changes, and the Heart SVG sizing requirement cannot be fully confirmed from the truncated overlay diff.",
+  "generatedAt": "2026-02-17T09:16:17.479Z",
+  "summary": "Diff adds deployment and smoke-test documentation plus multiple frontend code/UI changes (carousel logic, transition overlay, Moments page, styling/test IDs). It does not provide evidence of an actual production deployment being performed or a live URL being produced/verified.",
   "missing_requirements": [
     {
-      "id": "REQ-3",
-      "requirement": "Update the lucide Heart icon rendering used for the flying hearts so size is controlled via SVG-appropriate properties (e.g., width/height or component props) rather than fontSize, ensuring the hearts render at the intended random sizes.",
-      "reason": "LoveTransitionOverlay now generates a random `size` per heart in state, but the truncated diff does not show the actual `Heart` component render for the flying hearts (e.g., `size={...}` or `width/height`), so it cannot be verified that SVG-appropriate sizing is used instead of `fontSize`.",
+      "id": "REQ-1",
+      "requirement": "Publish the current draft build to the live (production) Internet Computer deployment so the app is accessible to end users.",
+      "reason": "The diff only adds a deployment guide document; it does not show deployment configuration changes, CI/CD scripts, canister IDs, or any produced live URL/identifier, nor evidence the app was deployed and loaded successfully.",
       "evidence": [
-        "frontend/src/components/LoveTransitionOverlay.tsx (truncated)"
+        "frontend/DEPLOYMENT.md"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Run a basic post-deployment smoke test on the live deployment to confirm key UI flows render correctly.",
+      "reason": "The diff adds a manual smoke test checklist but contains no evidence that smoke tests were executed against a live URL (no results, automation, or logs).",
+      "evidence": [
+        "frontend/SMOKE_TEST.md"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Added/expanded a dedicated “Moments” gallery page with uploaded photos and navigation, which is unrelated to fixing the missing flying hearts transition overlay.",
-      "reason": "BuildRequest is a focused frontend-only animation fix and explicitly says not to change copy/text beyond what is required to fix the animation; adding a new/expanded gallery view is out of scope.",
+      "description": "Added/modified app functionality and UI elements (love transition overlay, Moments page navigation/state, additional copy, data-testid attributes) beyond a deployment-only change.",
+      "reason": "BuildRequest explicitly states no new features or UI/UX changes beyond deploying what already exists, but multiple frontend components and behaviors were added/changed.",
       "evidence": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/LoveTransitionOverlay.tsx",
         "frontend/src/pages/Moments.tsx",
-        "frontend-file-summaries.txt (Moments page description)",
-        "frontend/src/App.tsx (truncated, shows Moments navigation/view state)"
+        "frontend-file-summaries.txt"
       ]
     },
     {
-      "description": "Modified Tailwind configuration with additional theme tokens and font families for a Valentine theme.",
-      "reason": "Not requested by any REQ and not necessary to address the overlay/animation reliability issue.",
+      "description": "Added/changed styling and Tailwind theme tokens/animations (romantic palette, custom animations).",
+      "reason": "Not requested by REQ-1/REQ-2; deployment and smoke test requirements do not call for design system or CSS changes.",
       "evidence": [
+        "frontend/src/index.css",
         "frontend/tailwind.config.js",
-        "frontend-file-summaries.txt (Tailwind config description)"
+        "frontend-file-summaries.txt"
       ]
     }
   ],
-  "confidence": 0.62,
+  "confidence": 0.8,
   "changed_files": [
     "frontend-file-summaries.txt",
+    "frontend/DEPLOYMENT.md",
+    "frontend/SMOKE_TEST.md",
     "frontend/src/App.tsx",
     "frontend/src/components/LoveTransitionOverlay.tsx",
-    "frontend/src/index.css",
+    "frontend/src/pages/Moments.tsx",
     "project_state.json"
   ]
 }

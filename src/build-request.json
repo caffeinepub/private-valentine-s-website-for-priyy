@@ -1,82 +1,53 @@
 {
   "kind": "build_request",
-  "title": "Fix missing flying hearts animation when clicking “Yes”",
-  "priority": "high",
+  "title": "Deploy current build to production (make app live)",
+  "projectName": "Love Slides",
+  "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Ensure that clicking the existing “Yes! 💕” button on the final slide reliably shows the full-screen transition overlay with visible, animated floating hearts (and the existing emojis/balloons) moving upward across the screen.",
-      "target": "frontend",
+      "text": "Publish the current draft build to the live (production) Internet Computer deployment so the app is accessible to end users.",
+      "target": "both",
       "source": {
         "messageIds": [
-          "msg-3"
+          "user-1"
         ],
         "quotes": [
-          "No heart are flying when clicking yes"
+          "Make it live"
         ]
       },
       "acceptanceCriteria": [
-        "On the final slide, clicking “Yes! 💕” renders the LoveTransitionOverlay for ~3 seconds and then returns to the accepted state content.",
-        "During the overlay, heart elements are clearly visible (not zero-size) and animate upward (not static).",
-        "The overlay animation works consistently across multiple consecutive clicks on “Yes! 💕” (no intermittent failures due to randomization/state)."
+        "A production/live deployment is created from the current codebase.",
+        "The platform returns a live URL (or equivalent identifier) for the production deployment.",
+        "Visiting the live URL loads the app successfully without runtime errors."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Fix the transition animation implementation so transforms that depend on CSS variables do not resolve to invalid values (e.g., provide a fallback and/or set required CSS custom properties per element) to prevent the floating animations from being dropped by the browser.",
+      "text": "Run a basic post-deployment smoke test on the live deployment to confirm key UI flows render correctly.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-3"
+          "user-1"
         ],
         "quotes": [
-          "No heart are flying when clicking yes"
+          "Make it live"
         ]
       },
       "acceptanceCriteria": [
-        "The love-emoji, balloon, and heart keyframe animations no longer rely on an undefined CSS variable value that can invalidate the transform property.",
-        "DevTools shows the animated elements have active animations (not crossed out) and their computed transform values are valid throughout the animation."
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Update the lucide Heart icon rendering used for the flying hearts so size is controlled via SVG-appropriate properties (e.g., width/height or component props) rather than fontSize, ensuring the hearts render at the intended random sizes.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-3"
-        ],
-        "quotes": [
-          "No heart are flying when clicking yes"
-        ]
-      },
-      "acceptanceCriteria": [
-        "The flying Heart icons in the transition overlay render at varied, visibly different sizes.",
-        "No console warnings/errors occur during the overlay animation related to invalid styles/attributes for the Heart SVG."
+        "The carousel view loads and navigation (Next/Previous) works.",
+        "On the final slide, clicking \"No\" shows the rejection title \"Nice Try! 😋\".",
+        "Clicking \"Yes! 💕\" shows the transition overlay and then the accepted state, and the \"Moments💞\" button navigates to the Moments page."
       ]
     }
   ],
-  "constraints": [
-    "Do not modify any files under frontend/src/components/ui (read-only UI components).",
-    "Keep the existing single-page flow: the “Yes! 💕” click triggers the overlay and then sets the final slide state to the existing accepted content."
-  ],
+  "constraints": [],
   "nonGoals": [
-    "Adding sound effects or audio on the transition.",
-    "Changing the copy/text content of the carousel slides beyond what is required to fix the animation.",
-    "Adding backend canister logic; this is a frontend-only fix."
+    "No new features or UI/UX changes beyond deploying what already exists.",
+    "No backend schema/state migrations unless required by the platform deployment process."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }
